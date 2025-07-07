@@ -4,18 +4,21 @@ import viteLogo from '/vite.svg'
 import { Button } from "@/components/ui/button"
 
 import './App.css'
+import { useGetPostsQuery } from './store/services/api'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const { data, error, isLoading } = useGetPostsQuery()
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error fetching data</div>
+  console.log("Data fetched:", data)
   return (
-    <>
-   <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
-
-    </>
+    <ul>
+      {data.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
   )
 }
-
-export default App
+export default App;
