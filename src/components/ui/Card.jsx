@@ -47,7 +47,7 @@ const Card = () => {
     },
     {
       id: 4,
-      icon: FaUsers,
+      icon: FaWallet,
       title: 'Total Fund',
       value: apiData ? `৳ ${apiData.totalFund}` : '--',// Replace with dynamic value if available
       subtitle: 'Total Funds Raised',
