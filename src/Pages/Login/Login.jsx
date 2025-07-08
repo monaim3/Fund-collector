@@ -66,26 +66,22 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const result = await login({
+            const data = await login({
                 roll: formData.rollNumber,
                 password: formData.password,
-            });
-            const data = result.data;
-            console.log('Login response:', data?.status_code, data?.token);
-
-            if (data?.status_code == 200) {
-                localStorage.setItem('authToken', data.token);
-                localStorage.setItem('userName', data.name);
-                localStorage.setItem('userRoll', formData.rollNumber);
-                 navigate('/');
-                window.location.href = '/';
-            } else {
-                alert('Login failed! Please check your credentials.');
-            }
+            }).unwrap(); // throws on error
+            console.log("data",data)
+            // Success
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userName', data.name);
+            localStorage.setItem('userRoll', formData.rollNumber);
+            window.location.href = '/';
         } catch (error) {
             console.error('Login error:', error);
-            alert('Something went wrong. Try again later.');
+            const message = error?.data?.message || 'Login failed!';
+            alert(message);
         }
+
     };
 
 
