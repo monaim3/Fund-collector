@@ -1,9 +1,10 @@
 import React from 'react'
+import Card from '../../components/ui/Card';
 
 const Home = () => {
     return (
         <div>
-<h3 className='text-center'>this is Home</h3>
+          <Card></Card>
         </div>
     );  
 }

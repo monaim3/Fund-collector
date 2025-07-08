@@ -72,10 +72,14 @@ const Login = () => {
             }).unwrap(); // throws on error
             console.log("data",data)
             // Success
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('userName', data.name);
-            localStorage.setItem('userRoll', formData.rollNumber);
-            window.location.href = '/';
+           if (data.status_code === 200 && data.token) {
+                localStorage.setItem('authToken', data.token);
+                localStorage.setItem('userName', data.name);
+                localStorage.setItem('userRoll', formData.rollNumber);
+                window.location.href = '/'; // Redirect to homepage
+            } else {
+                alert('Login failed! Please check your credentials.');
+            }
         } catch (error) {
             console.error('Login error:', error);
             const message = error?.data?.message || 'Login failed!';
@@ -83,8 +87,6 @@ const Login = () => {
         }
 
     };
-
-
 
     useEffect(() => {
         const token = localStorage.getItem('authToken');
