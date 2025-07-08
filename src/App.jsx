@@ -4,6 +4,7 @@ import PrivateRoute from './Pages/PrivateRoute/PrivateRoute';
 import Home from './Pages/Home';
 import NotFound from './Pages/NotFound/Notfound';
 import Layout from './layout';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ToastContainer richColors position="top-right" />
     </Router>
   );
 }

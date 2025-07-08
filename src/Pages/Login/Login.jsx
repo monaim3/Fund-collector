@@ -6,7 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../store/services/api';
-
+import { toast, ToastContainer } from 'react-toastify';
+import logo from '../../assets/Images/logo.png';
 const Login = () => {
     const navigate = useNavigate();
     const [login, { isLoading }] = useLoginMutation();
@@ -31,37 +32,6 @@ const Login = () => {
             rememberMe: checked
         }));
     };
-
-    // const handleSubmit = async (e) => {
-    //   e.preventDefault();
-
-    //   try {
-    //     const response = await fetch('https://apex.oracle.com/pls/apex/beesoft/auth/login', {
-    //       method: 'POST',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify({
-    //         roll: formData.rollNumber,
-    //         password: formData.password,
-    //       }),
-    //     });
-
-    //     const data = await response.json();
-
-    //     if (data.status_code === 200 && data.token) {
-    //       localStorage.setItem('authToken', data.token);
-    //       localStorage.setItem('userName', data.name);
-    //       localStorage.setItem('userRoll', formData.rollNumber);
-    //       window.location.href = '/'; // Redirect to homepage
-    //     } else {
-    //       alert('Login failed! Please check your credentials.');
-    //     }
-    //   } catch (err) {
-    //     console.error('Login error:', err);
-    //     alert('Something went wrong. Try again later.');
-    //   }
-    // };
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -70,20 +40,33 @@ const Login = () => {
                 roll: formData.rollNumber,
                 password: formData.password,
             }).unwrap(); // throws on error
-            console.log("data",data)
+            console.log("data", data)
             // Success
-           if (data.status_code === 200 && data.token) {
+            if (data?.status_code === 200 && data?.token) {
                 localStorage.setItem('authToken', data.token);
                 localStorage.setItem('userName', data.name);
                 localStorage.setItem('userRoll', formData.rollNumber);
-                window.location.href = '/'; // Redirect to homepage
+                toast.success('Login successful!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
+                setTimeout(() => {
+                    navigate('/');  
+                }, 1000);
+           
             } else {
-                alert('Login failed! Please check your credentials.');
+                toast.error('Login failed! Please check your credentials.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                });
             }
         } catch (error) {
             console.error('Login error:', error);
             const message = error?.data?.message || 'Login failed!';
-            alert(message);
+            toast.error(message, {
+                position: "top-right",
+                autoClose: 5000,
+            });
         }
 
     };
@@ -106,8 +89,8 @@ const Login = () => {
                     <div className="rounded-2xl shadow-2xl p-8 backdrop-blur-sm bg-white/95">
                         {/* Logo Section */}
                         <div className="text-center mb-8">
-                            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#2596be] to-[#2a3e97] rounded-full mb-4">
-                                <FaBolt className="w-8 h-8 text-white" />
+                            <div className="inline-flex items-center justify-center w-20 h-20 mb-4">
+                                <img src={logo} alt="logo" srcset="" />
                             </div>
                             <h1 className="text-2xl font-bold text-gray-800 mb-2">
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2596be] to-[#2a3e97]">
@@ -162,12 +145,12 @@ const Login = () => {
                                     <button
                                         type="button"
                                         onClick={togglePasswordVisibility}
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-[#d03e27] transition-colors duration-300"
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-[#2596be] transition-colors duration-300"
                                     >
                                         {showPassword ? (
-                                            <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-[#d03e27]" />
+                                            <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-[#2596be]" />
                                         ) : (
-                                            <FaEye className="h-5 w-5 text-gray-400 hover:text-[#d03e27]" />
+                                            <FaEye className="h-5 w-5 text-gray-400 hover:text-[#2596be]" />
                                         )}
                                     </button>
                                 </div>
@@ -179,7 +162,7 @@ const Login = () => {
                                     id="rememberMe"
                                     checked={formData.rememberMe}
                                     onCheckedChange={handleRememberMeChange}
-                                    className="data-[state=checked]:bg-[#d03e27] data-[state=checked]:border-[#d03e27]"
+                                    className="data-[state=checked]:bg-[#2596be] data-[state=checked]:border-[#2596be]"
                                 />
                                 <Label
                                     htmlFor="rememberMe"
@@ -207,18 +190,6 @@ const Login = () => {
                             </a>
                         </div>
 
-                        {/* Footer */}
-                        {/* <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-            <p className="text-xs text-gray-500">
-              Don't have an account?{' '}
-              <a
-                href="#signup"
-                className="text-[#2a3e97] hover:text-[#d03e27] transition-colors duration-300 font-medium"
-              >
-                Sign up here
-              </a>
-            </p>
-          </div> */}
                     </div>
                 </div>
             </div>

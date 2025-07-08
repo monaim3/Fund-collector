@@ -1,18 +1,25 @@
-import { 
-  FaWallet, 
-  FaCalendarAlt, 
-  FaMoneyBillWave, 
-  FaUsers, 
-  FaChartLine 
+import {
+  FaWallet,
+  FaCalendarAlt,
+  FaMoneyBillWave,
+  FaUsers,
+  FaChartLine
 } from 'react-icons/fa';
+import { useGetTotalQuery } from '../../store/services/api';
 
 const Card = () => {
+    const token = localStorage.getItem('authToken');
+   const { data, error, isLoading } = useGetTotalQuery(undefined, {
+    skip: !token,
+  });
+   const apiData = data?.data;
+
   const cardData = [
     {
       id: 1,
       icon: FaWallet,
       title: 'Balance',
-      value: '$2,400',
+      value: apiData ? `৳ ${apiData.totalBalance}` : '--',
       subtitle: 'Fund Balance',
       color: 'from-emerald-500 to-emerald-600',
       bgColor: 'bg-emerald-50',
@@ -22,7 +29,7 @@ const Card = () => {
       id: 2,
       icon: FaCalendarAlt,
       title: 'Total Event',
-      value: '1',
+      value: apiData ? `৳ ${apiData.totalEvent}` : '--',
       subtitle: 'Total Event occurs',
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
@@ -32,7 +39,7 @@ const Card = () => {
       id: 3,
       icon: FaMoneyBillWave,
       title: 'Total Expense',
-      value: '$400',
+      value: apiData ? `৳ ${apiData.totalExpense}` : '--',
       subtitle: 'Total Expenses',
       color: 'from-red-500 to-red-600',
       bgColor: 'bg-red-50',
@@ -41,40 +48,38 @@ const Card = () => {
     {
       id: 4,
       icon: FaUsers,
-      title: 'Active Users',
-      value: '156',
-      subtitle: 'Total Active Users',
+      title: 'Total Fund',
+      value: apiData ? `৳ ${apiData.totalFund}` : '--',// Replace with dynamic value if available
+      subtitle: 'Total Funds Raised',
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
       iconColor: 'text-purple-600'
     },
-    {
-      id: 5,
-      icon: FaChartLine,
-      title: 'Growth Rate',
-      value: '12.5%',
-      subtitle: 'Monthly Growth',
-      color: 'from-orange-500 to-orange-600',
-      bgColor: 'bg-orange-50',
-      iconColor: 'text-orange-600'
-    }
   ];
 
+
+
+ 
+  const user = {
+    email: localStorage.getItem('userEmail'),
+    displayName: localStorage.getItem('userName'),
+  };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8 z-0">
+      <div className="container  mx-auto  px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-            Dashboard Overview
+          <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800 mb-2">
+            <span className='font-light'>Welcome </span>
+            {user?.displayName}
           </h1>
-          <p className="text-gray-600 text-lg">
-            Monitor your key metrics and performance indicators
+          <p className="text-gray-600 text-center text-lg">
+            A quick glance at your current fund status and activities.
           </p>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
           {cardData.map((card) => {
             const IconComponent = card.icon;
             return (
@@ -84,7 +89,7 @@ const Card = () => {
               >
                 {/* Gradient Background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
-                
+
                 {/* Card Content */}
                 <div className="relative p-6">
                   {/* Icon Section */}
@@ -167,7 +172,7 @@ const Card = () => {
                   <span className="text-sm font-semibold">85%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-[#d03e27] to-[#2a3e97] h-2 rounded-full" style={{width: '85%'}}></div>
+                  <div className="bg-gradient-to-r from-[#d03e27] to-[#2a3e97] h-2 rounded-full" style={{ width: '85%' }}></div>
                 </div>
               </div>
               <div>
@@ -176,7 +181,7 @@ const Card = () => {
                   <span className="text-sm font-semibold">62%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-orange-400 to-red-500 h-2 rounded-full" style={{width: '62%'}}></div>
+                  <div className="bg-gradient-to-r from-orange-400 to-red-500 h-2 rounded-full" style={{ width: '62%' }}></div>
                 </div>
               </div>
             </div>

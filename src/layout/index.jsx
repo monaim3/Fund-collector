@@ -1,6 +1,5 @@
 import { ToastContainer } from 'react-toastify';
 import { Outlet } from 'react-router-dom';
-
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
 
@@ -13,7 +12,6 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
-      <ToastContainer richColors position="top-right" />
     </div>
   );
 };
