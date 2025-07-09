@@ -51,6 +51,9 @@ export default function Account() {
     
   return (
     <div>
+    <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800 mb-2">
+            <span className='font-light'>Your Account Summary </span>
+          </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
           {singleUserAmount.map((card) => {
             const IconComponent = card.icon;
