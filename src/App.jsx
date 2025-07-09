@@ -5,11 +5,13 @@ import Home from './Pages/Home';
 import NotFound from './Pages/NotFound/Notfound';
 import Layout from './layout';
 import { ToastContainer } from 'react-toastify';
+import Account from './Pages/Account/Account';
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Route */}
         <Route path="/login" element={<Login />} />
         <Route
           path="/"
@@ -20,9 +22,11 @@ function App() {
           }
         >
           <Route index element={<Home />} />
+          <Route path="account" element={<Account />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+
       <ToastContainer richColors position="top-right" />
     </Router>
   );

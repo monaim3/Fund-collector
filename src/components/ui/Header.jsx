@@ -20,7 +20,7 @@ const Header = () => {
 
   const menuItems = [
     { name: "Home", href: "#home" },
-    { name: "Account", href: "#account" },
+    { name: "Account", href: "account" },
     { name: "Vote", href: "#vote" },
     { name: "Event", href: "#event" },
     { name: "History", href: "#history" },
@@ -52,6 +52,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img src={logo} alt="Logo" className="w-20 h-20" />
+            <span className="text-3xl font-semibold text-white">E-112 BATCH-FUND</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -60,7 +61,7 @@ const Header = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-white hover:text-white/80 transition-colors duration-300 font-medium relative group"
+                className="text-white hover:text-white/80 transition-colors duration-300 lg:text-lg font-medium relative group uppercase"
               >
                 {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -69,7 +70,7 @@ const Header = () => {
 
             <Button
               variant="outline"
-              className="bg-transparent border-white text-white hover:bg-white hover:text-[#2596be] transition-all duration-300 font-medium"
+              className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-all duration-300 font-medium uppercase"
             >
               Payment
             </Button>

@@ -17,7 +17,7 @@ const customBaseQuery = async (args, api, extraOptions) => {
   if (result?.error?.status === 'PARSING_ERROR') {
     try {
       const fixedJSON = JSON.parse(
-        result.error.data.replace(/,(\s*[}\]])/g, '$1') // 🔧 Remove trailing commas
+        result.error.data.replace(/,(\s*[}\]])/g, '$1') 
       );
       return { data: fixedJSON };
     } catch (err) {
@@ -45,7 +45,13 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    Singleuser: builder.query({
+      query: () => ({
+        url: 'fund/user-fund',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useGetTotalQuery } = api;
+export const { useLoginMutation, useGetTotalQuery, useSingleuserQuery } = api;

@@ -94,7 +94,7 @@ const Login = () => {
                             </div>
                             <h1 className="text-2xl font-bold text-gray-800 mb-2">
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2596be] to-[#2a3e97]">
-                                    CSE-112 Batch Fund
+                                    E-112 Batch Fund
                                 </span>
                             </h1>
                             <p className="text-gray-600">Please sign in to your account</p>
@@ -168,7 +168,7 @@ const Login = () => {
                                     htmlFor="rememberMe"
                                     className="text-sm text-gray-600 cursor-pointer select-none"
                                 >
-                                    Remember username
+                                    Remember me
                                 </Label>
                             </div>
 
