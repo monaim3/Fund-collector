@@ -6,6 +6,8 @@ import NotFound from './Pages/NotFound/Notfound';
 import Layout from './layout';
 import { ToastContainer } from 'react-toastify';
 import Account from './Pages/Account/Account';
+import Event from './Pages/Event/Event';
+import EventDetails from './Pages/EventDetails/EventDetails';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         >
           <Route index element={<Home />} />
           <Route path="account" element={<Account />} />
+          <Route path="event" element={<Event />} />
+           <Route path='event/:id' element={<EventDetails />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

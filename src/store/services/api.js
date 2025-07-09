@@ -45,13 +45,25 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
-    Singleuser: builder.query({
+    SingleuserData: builder.query({
       query: () => ({
         url: 'fund/user-fund',
+        method: 'GET',
+      }),
+    }),
+    eventData: builder.query({
+      query: () => ({
+        url: 'event/list',
+        method: 'GET',
+      }),
+    }),
+    getEventById: builder.query({
+      query: (id) => ({
+        url: `event/expense/${id}`,
         method: 'GET',
       }),
     }),
   }),
 });
 
-export const { useLoginMutation, useGetTotalQuery, useSingleuserQuery } = api;
+export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery } = api;

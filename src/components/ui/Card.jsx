@@ -6,6 +6,7 @@ import {
   FaChartLine
 } from 'react-icons/fa';
 import { useGetTotalQuery } from '../../store/services/api';
+import Loading from './Loading';
 
 const Card = () => {
     const token = localStorage.getItem('authToken');
@@ -56,14 +57,15 @@ const Card = () => {
       iconColor: 'text-purple-600'
     },
   ];
-
-
-
- 
   const user = {
     email: localStorage.getItem('userEmail'),
     displayName: localStorage.getItem('userName'),
   };
+  if (isLoading) {
+    return (
+     <Loading></Loading>
+    );
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8 z-0">
       <div className="container  mx-auto  px-4 sm:px-6 lg:px-8">

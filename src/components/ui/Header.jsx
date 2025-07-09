@@ -19,17 +19,15 @@ const Header = () => {
   };
 
   const menuItems = [
-    { name: "Home", href: "#home" },
+    { name: "Home", href: "/" },
     { name: "Account", href: "account" },
-    { name: "Vote", href: "#vote" },
-    { name: "Event", href: "#event" },
+    { name: "Vote", href: "vote" },
+    { name: "Event", href: "event" },
     { name: "History", href: "#history" },
   ];
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userName");
@@ -51,21 +49,23 @@ const Header = () => {
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <img src={logo} alt="Logo" className="w-20 h-20" />
-            <span className="text-3xl font-semibold text-white">E-112 BATCH-FUND</span>
+           <Link to="/" className="flex items-center space-x-2">
+            <img src={logo} alt="Logo" className="w-20 h-20" /> 
+            <span className="text-xl lg:text-3xl font-semibold text-white">E-112 BATCH-FUND</span>
+           </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={`/${item.href}`}
                 className="text-white hover:text-white/80 transition-colors duration-300 lg:text-lg font-medium relative group uppercase"
               >
                 {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </a>
+              </Link>
             ))}
 
             <Button
