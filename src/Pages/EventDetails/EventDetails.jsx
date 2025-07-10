@@ -18,24 +18,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEventList } from "../../store/Slice/commonSlice";
 
 const EventDetails = () => {
-  const { id } = useParams();
-  const token = localStorage.getItem("authToken") || "mock-token";
-  const isOpen = useSelector((state) => state.common.isOpen);
-  const { data, error, isLoading } = useGetEventByIdQuery(id, {
-    skip: !token,
-  });
-  const eventList = data?.data || [];
-  const  dispatch=useDispatch()
-  const totalAmount = eventList.reduce((total, item) => total + item.amount, 0);
-  if (isLoading) {
-    return <Loading />;
-  }
-
- useEffect(() => {
- if (eventList.length > 0) {
+ const { id } = useParams();
+  const token = localStorage.getItem("authToken");
+  const dispatch = useDispatch();
+  const { data, isLoading } = useGetEventByIdQuery(id, { skip: !token });
+  const eventList = Array.isArray(data?.data) ? data.data : [];
+  const totalAmount = eventList.reduce(
+    (sum, item) => sum + (Number(item.amount) || 0), 0
+  );
+  useEffect(() => {
+    if (eventList.length) {
       dispatch(setEventList(eventList));
     }
-  },[eventList, dispatch])
+  }, [eventList, dispatch]);
+  if (isLoading) return <Loading />;
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8">
       <div className="container mx-auto  px-4 sm:px-6 lg:px-8">
@@ -53,7 +49,7 @@ const EventDetails = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#2596be] to-[#1d4ed8]  rounded-lg flex items-center justify-center mr-4">
                   <MdReceipt className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -151,7 +147,7 @@ const EventDetails = () => {
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <span className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                        <span className="w-8 h-8 bg-gradient-to-br from-[#2596be] to-[#1d4ed8] rounded-full flex items-center justify-center text-white text-sm font-medium">
                           {item.id}
                         </span>
                       </div>

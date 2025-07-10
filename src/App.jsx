@@ -8,6 +8,9 @@ import { ToastContainer } from 'react-toastify';
 import Account from './Pages/Account/Account';
 import Event from './Pages/Event/Event';
 import EventDetails from './Pages/EventDetails/EventDetails';
+import History from './Pages/History/History';
+import Payment from './Pages/Payment/Payment';
+import PaymentDetails from './Pages/PaymentDetails/PaymentDetails';
 
 function App() {
   return (
@@ -26,7 +29,10 @@ function App() {
           <Route index element={<Home />} />
           <Route path="account" element={<Account />} />
           <Route path="event" element={<Event />} />
+          <Route path="history" element={<History />} />
            <Route path='event/:id' element={<EventDetails />} />
+           <Route path='payment' element={<Payment />} />
+          <Route path="payment/:method" element={<PaymentDetails />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

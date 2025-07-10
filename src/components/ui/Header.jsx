@@ -68,12 +68,14 @@ const Header = () => {
               </Link>
             ))}
 
+            <Link to="/payment">
             <Button
               variant="outline"
-              className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-all duration-300 font-medium uppercase"
+              className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-colors duration-300 font-medium uppercase cursor-pointer"
             >
               Payment
             </Button>
+            </Link>
 
             {/* Avatar Dropdown - Desktop */}
             <div className="relative">

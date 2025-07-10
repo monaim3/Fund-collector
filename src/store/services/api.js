@@ -63,7 +63,20 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    getPaymentHistory: builder.query({
+      query: () => ({ 
+        url: 'payment/payment-history',
+        method: 'GET',
+      }),
+    }),
+    paymentSent:builder.mutation({
+      query: ({ amount, paymentMethod, number, transactionId }) => ({ 
+        url: 'payment/request',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { amount, paymentMethod, number, transactionId },
+      }),
+    }),
   }),
 });
-
-export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery } = api;
+export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation } = api;

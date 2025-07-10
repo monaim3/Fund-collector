@@ -110,24 +110,16 @@ const Card = () => {
                       {card.value}
                     </span>
                   </div>
-
-                  {/* Subtitle */}
                   <p className="text-sm text-gray-500 font-medium">
                     {card.subtitle}
                   </p>
-
-                  {/* Decorative Element */}
                   <div className={`absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r ${card.color} group-hover:w-full transition-all duration-500`}></div>
                 </div>
-
-                {/* Hover Effect Border */}
                 <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-gray-200 transition-colors duration-300"></div>
               </div>
             );
           })}
         </div>
-
-        {/* Additional Stats Section */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <h4 className="text-lg font-semibold text-gray-800 mb-2">Quick Stats</h4>
