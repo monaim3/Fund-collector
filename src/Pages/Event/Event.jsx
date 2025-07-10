@@ -4,6 +4,7 @@ import { MdEvent, MdDateRange, MdStickyNote2, MdAttachMoney } from 'react-icons/
 import Loading from '../../components/ui/Loading';
 import { useEventDataQuery } from '../../store/services/api';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Event = () => {
     const token = localStorage.getItem('authToken') || 'mock-token';
@@ -11,13 +12,13 @@ const Event = () => {
         skip: !token,
     });
     const apiData = data?.data;
-
+    const EventList =useSelector((state)=> state.common.eventList)
     if (isLoading) {
         return <Loading />;
     }
     return (
         <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8 relative overflow-hidden'>
-            <div className="max-w-7xl mx-auto">
+            <div className="container mx-auto  px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-8">
                     <h1 className='text-3xl md:text-4xl font-bold text-gray-800 mb-2'>Events</h1>
                     <p className="text-gray-600 text-lg">All Events are listed here</p>
@@ -74,9 +75,9 @@ const Event = () => {
                                         </div>
                                     </div>
                                     <div className="flex-1">
-                                        <p className="text-sm text-gray-500 mb-1">Total Expense</p>
+                                        <p className="text-sm text-gray-500 mb-1"> Expense</p>
                                         <p className="text-lg font-semibold text-gray-800">
-
+                                             {EventList[0]?.amount}
                                         </p>
                                     </div>
                                 </div>

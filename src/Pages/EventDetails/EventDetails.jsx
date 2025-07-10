@@ -1,76 +1,5 @@
-// import React from 'react';
-// import { useGetEventByIdQuery } from '../../store/services/api';
-// import { useParams } from 'react-router-dom';
-// import {
-//     Table,
-//     TableBody,
-//     TableCaption,
-//     TableCell,
-//     TableFooter,
-//     TableHead,
-//     TableHeader,
-//     TableRow,
-// } from "@/components/ui/table";
-// import Loading from '../../components/ui/Loading';
 
-// const EventDetails = () => {
-//     const { id } = useParams();
-//     const token = localStorage.getItem('authToken');
-
-//     const { data, error, isLoading } = useGetEventByIdQuery(id, {
-//         skip: !token,
-//     });
-//     const eventList = data?.data || [];
-
-//     return (
-//         <div>
-//             {isLoading && <Loading />}
-//             {data && (
-//                 <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8 relative overflow-hidden'>
-//                     <Table>
-//                         <TableCaption>Details of the event expenses.</TableCaption>
-//                         <TableHeader>
-//                             <TableRow>
-//                                 <TableHead>ID</TableHead>
-//                                 <TableHead>Purpose</TableHead>
-//                                 <TableHead>Amount</TableHead>
-//                                 <TableHead>Spent By</TableHead>
-//                                 <TableHead>Expense Date</TableHead>
-//                                 <TableHead>Note</TableHead>
-//                             </TableRow>
-//                         </TableHeader>
-//                         <TableBody>
-//                             {eventList.map((item) => (
-//                                 <TableRow key={item.id}>
-//                                     <TableCell>{item.id}</TableCell>
-//                                     <TableCell>{item.purpose}</TableCell>
-//                                     <TableCell>{item.amount} ৳</TableCell>
-//                                     <TableCell>{item.spentBy}</TableCell>
-//                                     <TableCell>{new Date(item.expenseDate).toLocaleDateString()}</TableCell>
-//                                     <TableCell>{item.note || 'N/A'}</TableCell>
-//                                 </TableRow>
-//                             ))}
-//                         </TableBody>
-//                         <TableFooter>
-//                             <TableRow>
-//                                 <TableCell colSpan={2}>Total</TableCell>
-//                                 <TableCell colSpan={4} className="text-right">
-//                                     {eventList.reduce((total, item) => total + item.amount, 0)} ৳
-//                                 </TableCell>
-//                             </TableRow>
-//                         </TableFooter>
-//                     </Table>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default EventDetails;
-
-
-
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   MdReceipt,
@@ -85,24 +14,31 @@ import { useGetEventByIdQuery } from "../../store/services/api";
 import Loading from "../../components/ui/Loading";
 import { Link } from "react-router-dom"; 
 import { FaArrowCircleLeft, FaArrowLeft } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { setEventList } from "../../store/Slice/commonSlice";
 
 const EventDetails = () => {
   const { id } = useParams();
   const token = localStorage.getItem("authToken") || "mock-token";
-
+  const isOpen = useSelector((state) => state.common.isOpen);
   const { data, error, isLoading } = useGetEventByIdQuery(id, {
     skip: !token,
   });
   const eventList = data?.data || [];
+  const  dispatch=useDispatch()
   const totalAmount = eventList.reduce((total, item) => total + item.amount, 0);
-
   if (isLoading) {
     return <Loading />;
   }
+
+ useEffect(() => {
+ if (eventList.length > 0) {
+      dispatch(setEventList(eventList));
+    }
+  },[eventList, dispatch])
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
+      <div className="container mx-auto  px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <div className="flex items-center mb-4">
             <Link to="/event" className="mr-4">
@@ -114,7 +50,6 @@ const EventDetails = () => {
               Event Expense Details
             </h1>
           </div>
-          {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
               <div className="flex items-center">
@@ -168,39 +103,39 @@ const EventDetails = () => {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    <div className="flex items-center">
-                      <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+                  <th className="px-6 py-4 text-left text-xs lg:text-lg font-semibold text-gray-600 uppercase tracking-wider">
+                    <div className="flex items-center ">
+                      <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-2 text-lg">
                         #
                       </span>
                       ID
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs lg:text-lg font-semibold text-gray-600 uppercase tracking-wider">
                     <div className="flex items-center">
                       <MdReceipt className="w-4 h-4 text-purple-600 mr-2" />
                       Purpose
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs lg:text-lg font-semibold text-gray-600 uppercase tracking-wider">
                     <div className="flex items-center">
                       <FiDollarSign className="w-4 h-4 text-green-600 mr-2" />
                       Amount
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs lg:text-lg  font-semibold text-gray-600 uppercase tracking-wider">
                     <div className="flex items-center">
                       <MdPerson className="w-4 h-4 text-blue-600 mr-2" />
                       Spent By
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs lg:text-lg font-semibold text-gray-600 uppercase tracking-wider">
                     <div className="flex items-center">
                       <MdDateRange className="w-4 h-4 text-orange-600 mr-2" />
                       Date
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs lg:text-lg font-semibold text-gray-600 uppercase tracking-wider">
                     <div className="flex items-center">
                       <MdStickyNote2 className="w-4 h-4 text-amber-600 mr-2" />
                       Note
@@ -235,12 +170,7 @@ const EventDetails = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center mr-3">
-                          <span className="text-white text-xs font-medium">
-                            {/* {item.split(" ").map((n) => n[0]).join("")} */}
-                            <p>test</p>
-                            </span>
-                        </div>
+                        
                         <div className="text-sm font-medium text-gray-900">
                           {item.spentBy}
                         </div>

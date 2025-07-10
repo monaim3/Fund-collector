@@ -20,10 +20,10 @@ const Header = () => {
 
   const menuItems = [
     { name: "Home", href: "/" },
-    { name: "Account", href: "account" },
-    { name: "Vote", href: "vote" },
-    { name: "Event", href: "event" },
-    { name: "History", href: "#history" },
+    { name: "Account", href: "/account" },
+    { name: "Vote", href: "/vote" },
+    { name: "Event", href: "/event" },
+    { name: "History", href: "/history" },
   ];
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -60,7 +60,7 @@ const Header = () => {
             {menuItems.map((item) => (
               <Link
                 key={item.name}
-                to={`/${item.href}`}
+                to={`${item.href}`}
                 className="text-white hover:text-white/80 transition-colors duration-300 lg:text-lg font-medium relative group uppercase"
               >
                 {item.name}

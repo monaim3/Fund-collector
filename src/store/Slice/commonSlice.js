@@ -1,0 +1,23 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  eventList:[],
+  isOpen: true,
+};
+const commonSlice = createSlice({
+  name: "common",
+  initialState,
+  reducers: {
+    // Toggle action
+    toggleSideBar: (state) => {
+      state.isOpen = !state.isOpen;
+    },
+
+    setEventList: (state, action) => {
+      state.eventList = action.payload;
+    },
+  },
+});
+
+export const {  toggleSideBar, setEventList } = commonSlice.actions;
+export default commonSlice.reducer;

@@ -123,13 +123,13 @@ export default function App() {
   return (
     <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8 relative overflow-hidden'>
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="container mx-auto  px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-10 -right-10 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
-        {/* Header Section */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg shadow-blue-500/25 mb-6">
             <Wallet className="w-10 h-10 text-white" />
@@ -142,8 +142,6 @@ export default function App() {
             Overview of your financial details and transactions
           </p>
         </div>
-
-        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 md:gap-8">
           {singleUserAmount.map((card, index) => {
             const IconComponent = card.icon;
@@ -155,43 +153,32 @@ export default function App() {
                   animationDelay: `${index * 100}ms`
                 }}
               >
-                {/* Gradient Overlay */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
 
-                {/* Decorative Top Bar */}
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${card.gradient}`}></div>
 
-                {/* Card Content */}
                 <div className="relative p-8">
-                  {/* Icon Section */}
                   <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${card.bgGradient} rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}>
                     <IconComponent className={`w-8 h-8 ${card.iconColor}`} />
                   </div>
-
-                  {/* Title */}
                   <h3 className={`text-xl font-bold ${card.textColor} mb-3 group-hover:text-gray-900 transition-colors duration-300`}>
                     {card.title}
                   </h3>
-
-                  {/* Value */}
                   <div className="mb-4">
                     <span className="text-3xl md:text-4xl font-bold text-gray-900 group-hover:bg-gradient-to-r group-hover:from-gray-800 group-hover:to-gray-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                       {card.value}
                     </span>
                   </div>
-
-                  {/* Subtitle */}
                   <p className="text-sm text-gray-500 font-medium leading-relaxed">
                     {card.subtitle}
                   </p>
                 </div>
-
-                {/* Hover Effect Glow */}
                 <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br ${card.gradient} blur-xl`}></div>
               </div>
             );
           })}
         </div>
+      </div>
       </div>
     </div>
   );
