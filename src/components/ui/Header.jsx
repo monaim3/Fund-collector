@@ -35,11 +35,11 @@ const Header = () => {
     localStorage.removeItem("userRoll");
     toast.success("Logout successfully", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 2000,
     });
     setTimeout(() => {
       navigate("/login");
-      window.location.reload();
+      // window.location.reload();
     }, 1000);
   };
 
@@ -146,13 +146,14 @@ const Header = () => {
               </a>
             ))}
             <div className="px-4">
-              <Button
-                variant="outline"
-                className="w-full bg-transparent border-white text-white hover:bg-white hover:text-[#2596be] transition-all duration-300 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Payment
-              </Button>
+             <Link to="/payment">
+            <Button
+              variant="outline"
+              className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-colors duration-300 font-medium uppercase cursor-pointer"
+            >
+              Payment
+            </Button>
+            </Link>
             </div>
 
             {/* Avatar Dropdown - Mobile */}

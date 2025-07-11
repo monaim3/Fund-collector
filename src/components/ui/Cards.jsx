@@ -8,7 +8,7 @@ import {
 import { useGetTotalQuery } from '../../store/services/api';
 import Loading from './Loading';
 
-const Card = () => {
+const Cards = () => {
     const token = localStorage.getItem('authToken');
    const { data, error, isLoading } = useGetTotalQuery(undefined, {
     skip: !token,
@@ -186,4 +186,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default Cards;

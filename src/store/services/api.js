@@ -77,6 +77,18 @@ export const api = createApi({
         body: { amount, paymentMethod, number, transactionId },
       }),
     }),
+    getVote: builder.query({
+      query: () => ({
+        url: 'poll/poll-list',
+        method: 'GET',
+      }),
+    }),
+    getSingleVote: builder.query({
+      query: (id) => ({
+        url: `poll/poll-options/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
-export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation } = api;
+export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation, useGetVoteQuery, useGetSingleVoteQuery } = api;

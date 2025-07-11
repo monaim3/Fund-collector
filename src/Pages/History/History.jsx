@@ -111,16 +111,7 @@ const History = () => {
     // Handle the format from your API: "2024-01-15T10:30:00Z" -> "15-01-2024"
     return dateString.split("T")[0].split("-").reverse().join("-");
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Loading />
-        </div>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading />;
 
   if (error) {
     return (
