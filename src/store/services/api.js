@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { SendToBack } from 'lucide-react';
 
 const customBaseQuery = async (args, api, extraOptions) => {
   const rawBaseQuery = fetchBaseQuery({
@@ -89,6 +90,14 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    sendVote: builder.mutation({
+      query: ({ pollID, optionID }) => ({
+        url: `poll/poll-vote`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { pollID, optionID },
+      }),
+    }),
   }),
 });
-export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation, useGetVoteQuery, useGetSingleVoteQuery } = api;
+export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation, useGetVoteQuery, useGetSingleVoteQuery, useSendVoteMutation } = api;

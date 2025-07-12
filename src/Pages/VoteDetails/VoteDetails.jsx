@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/ui/Loading';
-import { useGetSingleVoteQuery } from '../../store/services/api';
+import { useGetSingleVoteQuery, useSendVoteMutation } from '../../store/services/api';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setSaveVote } from '../../store/Slice/commonSlice';
 
 
 const VoteDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch()
   const token = localStorage.getItem('authToken');
-
+  const navigate = useNavigate()
   const { data, error, isLoading } = useGetSingleVoteQuery(id, {
     skip: !token,
   });
 
   const [selectedId, setSelectedId] = useState(null);
-
+  const [sendVote, { data: voteData, error: voteError, isLoading: voteLoading }] = useSendVoteMutation();
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('Selected option id:', selectedId);
-    // If you also want the title:
-    const selected = data?.data?.find(opt => opt.id === selectedId);
-    console.log('Selected option title:', selected?.title);
+    sendVote({ pollID: id, optionID: selectedId }).unwrap()
+      .then((res) => {
+        if (res?.data) {
+          dispatch(setSaveVote(res.data));
+        }
+        toast.success('Vote submitted successfully!', {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        setSelectedId(null);
+        navigate(`/vote/${id}/result`, { replace: true });
+      })
+      .catch((err) => {
+        toast.error("Vote error");
+      });
   };
 
   if (isLoading) return <Loading />;

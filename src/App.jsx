@@ -13,6 +13,7 @@ import Payment from './Pages/Payment/Payment';
 import PaymentDetails from './Pages/PaymentDetails/PaymentDetails';
 import Vote from './Pages/Vote/Vote';
 import VoteDetails from './Pages/VoteDetails/VoteDetails';
+import VoteResult from './Pages/VoteResult/VoteResult';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="payment/:method" element={<PaymentDetails />} />
           <Route path="vote" element={<Vote />} />
            <Route path='vote/:id' element={<VoteDetails />} />
+           <Route path='vote/:id/result' element={<VoteResult />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
