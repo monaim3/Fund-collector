@@ -93,7 +93,7 @@ const VoteResult = () => {
 
   return (
    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 shadow-sm border-b ">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 shadow-md ">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
