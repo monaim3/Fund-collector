@@ -50,7 +50,7 @@ const VoteDetails = () => {
           >
             <fieldset className="space-y-4">
               <legend className="text-lg font-semibold text-gray-800 mb-2">
-                Choose one:
+                Choose one
               </legend>
 
               {data.data.map(({ id, title }) => (

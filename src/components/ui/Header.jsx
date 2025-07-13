@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,20 @@ import logo from "../../assets/Images/logo.png";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
-
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (toggle && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+
+    // attach / detach listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [toggle]);
+
 
   const user = {
     email: localStorage.getItem("userEmail"),
@@ -49,10 +61,10 @@ const Header = () => {
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-           <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt="Logo" className="w-20 h-20" /> 
-            <span className="text-xl lg:text-3xl font-semibold text-white">E-112 BATCH-FUND</span>
-           </Link>
+            <Link to="/" className="flex items-center space-x-2">
+              <img src={logo} alt="Logo" className="w-20 h-20" />
+              <span className="text-xl lg:text-3xl font-semibold text-white">E-112 BATCH-FUND</span>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -69,12 +81,12 @@ const Header = () => {
             ))}
 
             <Link to="/payment">
-            <Button
-              variant="outline"
-              className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-colors duration-300 font-medium uppercase cursor-pointer"
-            >
-              Payment
-            </Button>
+              <Button
+                variant="outline"
+                className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-colors duration-300 font-medium uppercase cursor-pointer"
+              >
+                Payment
+              </Button>
             </Link>
 
             {/* Avatar Dropdown - Desktop */}
@@ -90,11 +102,11 @@ const Header = () => {
               </label>
 
               {toggle && (
-                <ul className="absolute right-0 mt-3 p-2 z-50 shadow bg-white text-black rounded-box w-52">
+                <ul ref={dropdownRef} className="absolute right-0 mt-3 p-2 z-50 shadow bg-white text-black rounded-box w-52">
                   <li className="px-4 py-2 border-b">
                     <span className="font-semibold">{user?.displayName}</span>
                   </li>
-                   <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
+                  <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
                     <Link to="/view-profile">View Profile</Link>
                   </li>
                   <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
@@ -130,9 +142,8 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <nav className="py-4 space-y-2">
             {menuItems.map((item) => (
@@ -146,14 +157,14 @@ const Header = () => {
               </a>
             ))}
             <div className="px-4">
-             <Link to="/payment">
-            <Button
-              variant="outline"
-              className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-colors duration-300 font-medium uppercase cursor-pointer"
-            >
-              Payment
-            </Button>
-            </Link>
+              <Link to="/payment">
+                <Button
+                  variant="outline"
+                  className="bg-transparent border-white lg:text-lg text-white hover:bg-white hover:text-[#2596be] transition-colors duration-300 font-medium uppercase cursor-pointer"
+                >
+                  Payment
+                </Button>
+              </Link>
             </div>
 
             {/* Avatar Dropdown - Mobile */}
@@ -168,7 +179,7 @@ const Header = () => {
                     <FaUser size={20} />
                   </div>
                   <span className="font-medium">
-                    {user?.displayName }
+                    {user?.displayName}
                   </span>
                 </label>
 
@@ -178,10 +189,10 @@ const Header = () => {
                       <span className="font-semibold">{user?.displayName}</span>
                     </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                    <Link to="/view-profile">View Profile</Link>
-                  </li>
+                      <Link to="/view-profile">View Profile</Link>
+                    </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                     <Link to={"/change-password"}>Change Password</Link>
+                      <Link to={"/change-password"}>Change Password</Link>
                     </li>
                     <li
                       onClick={() => {

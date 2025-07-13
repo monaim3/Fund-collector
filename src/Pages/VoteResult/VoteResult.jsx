@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BarChart3, TrendingUp, Users, Trophy, Medal, Award } from 'lucide-react';
-import { useGetSingleVoteQuery } from '../../store/services/api';
+import {  useGetVoteResultQuery } from '../../store/services/api';
 import Loading from '../../components/ui/Loading';
 
 const VoteResult = () => {
@@ -11,13 +11,9 @@ const VoteResult = () => {
   const { id } = useParams();
   const token = localStorage.getItem("authToken");
 
-  // Fetch the vote result from the backend
-  const { data, error, isLoading } = useGetSingleVoteQuery(id, {
-    skip: !token,
-  });
-
-  const voteResults = data?.data || []; // fallback to empty array
-
+   const { data, isLoading } = useGetVoteResultQuery(id, token, { skip: !token });
+  const voteResults = data?.data || []; 
+  console.log("Vote Results:", voteResults);
   const [animatedResults, setAnimatedResults] = useState([]);
   const totalVotes = voteResults?.reduce((sum, result) => sum + result.vote_count, 0) || 0;
 
