@@ -95,7 +95,7 @@ const Header = () => {
                     <span className="font-semibold">{user?.displayName}</span>
                   </li>
                    <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                    <a>View Profile</a>
+                    <Link to="/view-profile">View Profile</Link>
                   </li>
                   <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
                     <Link to={"/change-password"}>Change Password</Link>
@@ -178,7 +178,7 @@ const Header = () => {
                       <span className="font-semibold">{user?.displayName}</span>
                     </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                    <a>View Profile</a>
+                    <Link to="/view-profile">View Profile</Link>
                   </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
                      <Link to={"/change-password"}>Change Password</Link>
