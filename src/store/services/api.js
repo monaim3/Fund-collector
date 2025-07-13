@@ -98,6 +98,20 @@ export const api = createApi({
         body: { pollID, optionID },
       }),
     }),
+    changePassword: builder.mutation({
+      query: ({ new_password,password,roll }) => ({
+        url: 'auth/reset-password',
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: { new_password, password, roll },
+      }),
+    }),
+    getUserProfile: builder.query({
+      query: () => ({
+        url: 'auth/profile',
+        method: 'GET',
+      }),
+    }),
   }),
 });
-export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation, useGetVoteQuery, useGetSingleVoteQuery, useSendVoteMutation } = api;
+export const { useLoginMutation, useGetTotalQuery, useSingleuserDataQuery, useEventDataQuery, useGetEventByIdQuery, useGetPaymentHistoryQuery, usePaymentSentMutation, useGetVoteQuery, useGetSingleVoteQuery, useSendVoteMutation, useChangePasswordMutation, useGetUserProfileQuery } = api;

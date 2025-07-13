@@ -1,52 +1,30 @@
-// import React from 'react';
-// import { useParams } from 'react-router-dom';
-// import { useSendVoteMutation } from '../../store/services/api';
-// import { useSelector } from 'react-redux';
-
-// const VoteResult = () => {
-//     const params=useParams()
-//       const voteResults = useSelector(state => state.common.saveVote);
-//     console.log('datass',voteResults)
-//     return (
-//         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-//       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-//         <h1 className="text-2xl md:text-4xl font-semibold text-gray-800 mb-4">Vote Results</h1>
-//         <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
-//           <ul className="list-disc list-inside">
-//             {voteResults?.map((result, index) => (
-//               <li key={index} className="text-gray-600 mb-2">
-//                 Option: {result.title}, Votes: {result.vote_count} , {result.vote_percentage}%
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//       </div>
-//     </div>
-//     );
-// };
-
-// export default VoteResult;
-
-
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BarChart3, TrendingUp, Users, Trophy, Medal, Award } from 'lucide-react';
+import { useGetSingleVoteQuery } from '../../store/services/api';
+import Loading from '../../components/ui/Loading';
 
 const VoteResult = () => {
-  const params = useParams();
-  const voteResults = useSelector(state => state.common.saveVote);
-  
+
+  const { id } = useParams();
+  const token = localStorage.getItem("authToken");
+
+  // Fetch the vote result from the backend
+  const { data, error, isLoading } = useGetSingleVoteQuery(id, {
+    skip: !token,
+  });
+
+  const voteResults = data?.data || []; // fallback to empty array
+
   const [animatedResults, setAnimatedResults] = useState([]);
   const totalVotes = voteResults?.reduce((sum, result) => sum + result.vote_count, 0) || 0;
 
   useEffect(() => {
-    if (voteResults && voteResults.length > 0) {
-      // Initialize with 0 values
+    if (voteResults.length > 0) {
       setAnimatedResults(voteResults.map(() => ({ percentage: 0, votes: 0 })));
-      
-      // Animate to actual values after a delay
+
       const timer = setTimeout(() => {
         setAnimatedResults(voteResults.map(result => ({
           percentage: result.vote_percentage,
@@ -89,12 +67,11 @@ const VoteResult = () => {
     return colors[index % colors.length];
   };
 
-  console.log('datass', voteResults);
-
+  if (isLoading) return <Loading />;
   return (
-   <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 shadow-md ">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12  ">
+        <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
@@ -142,19 +119,21 @@ const VoteResult = () => {
                   <Trophy className="w-8 h-8 text-yellow-500" />
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Participation Rate</p>
                     <p className="text-xl font-bold text-gray-800">
-                      {voteResults.length > 0 ? Math.round((totalVotes / (totalVotes * 1.2)) * 100) : 0}%
-                    </p>
+                      {totalVotes > 0
+                        ? Math.round((totalVotes / (totalVotes * 1.2)) * 100)
+                        : 0}% 
+                        </p>
                   </div>
                   <TrendingUp className="w-8 h-8 text-green-500" />
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
@@ -169,8 +148,8 @@ const VoteResult = () => {
             {/* Vote Results Cards */}
             <div className="space-y-4">
               {voteResults.map((result, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 ${getBorderColor(index)} group hover:scale-[1.02]`}
                 >
                   <div className="p-6 md:p-8">
@@ -197,14 +176,14 @@ const VoteResult = () => {
                         <div className="text-sm text-gray-500">of total votes</div>
                       </div>
                     </div>
-                    
+
                     {/* Progress Bar */}
                     <div className="relative">
                       <div className="w-full bg-gray-200 rounded-full h-3 md:h-4 overflow-hidden">
-                        <div 
+                        <div
                           className={`h-full bg-gradient-to-r ${getGradientColor(index)} rounded-full transition-all duration-1000 ease-out relative overflow-hidden`}
-                          style={{ 
-                            width: `${animatedResults[index]?.percentage || 0}%` 
+                          style={{
+                            width: `${animatedResults[index]?.percentage || 0}%`
                           }}
                         >
                           <div className="absolute inset-0 bg-white opacity-20 animate-pulse"></div>

@@ -14,6 +14,8 @@ import PaymentDetails from './Pages/PaymentDetails/PaymentDetails';
 import Vote from './Pages/Vote/Vote';
 import VoteDetails from './Pages/VoteDetails/VoteDetails';
 import VoteResult from './Pages/VoteResult/VoteResult';
+import ChangePass from './Pages/ChangePass/ChangePass';
+import ViewProfile from './Pages/ViewProfile/ViewProfile';
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
           <Route path="vote" element={<Vote />} />
            <Route path='vote/:id' element={<VoteDetails />} />
            <Route path='vote/:id/result' element={<VoteResult />} />
+           <Route path='change-password' element={<ChangePass/>} />
+            <Route path="view-profile" element={<ViewProfile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

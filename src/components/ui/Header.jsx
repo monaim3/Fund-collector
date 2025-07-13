@@ -98,7 +98,7 @@ const Header = () => {
                     <a>View Profile</a>
                   </li>
                   <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                    <a>Change Password</a>
+                    <Link to={"/change-password"}>Change Password</Link>
                   </li>
 
                   <li
@@ -181,9 +181,8 @@ const Header = () => {
                     <a>View Profile</a>
                   </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                      <a>Change Password</a>
+                     <Link to={"/change-password"}>Change Password</Link>
                     </li>
-
                     <li
                       onClick={() => {
                         setToggle(false);
