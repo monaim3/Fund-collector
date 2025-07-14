@@ -31,6 +31,7 @@ const customBaseQuery = async (args, api, extraOptions) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: customBaseQuery,
+   tagTypes: ["UserProfile"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ roll, password }) => ({
@@ -117,7 +118,18 @@ export const api = createApi({
         url: "auth/profile",
         method: "GET",
       }),
+      providesTags: ["UserProfile"],
+
     }),
+    userProfileEdit: builder.mutation({
+      query: (profile) => ({
+        url: "auth/update-profile",
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: profile,
+      }),
+      invalidatesTags: ["UserProfile"],
+    })
   }),
 });
 export const {
@@ -134,4 +146,5 @@ export const {
   useChangePasswordMutation,
   useGetUserProfileQuery,
   useGetVoteResultQuery,
+  useUserProfileEditMutation
 } = api;

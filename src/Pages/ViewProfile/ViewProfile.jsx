@@ -12,12 +12,17 @@ import {
   Edit3,
   Shield,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
 
 const ViewProfile = () => {
   const token = localStorage.getItem("authToken");
-  const { data, isLoading } = useGetUserProfileQuery(token, { skip: !token });
-  const userProfile = data?.data || {};
-
+const { data, isLoading } = useGetUserProfileQuery(token, {
+  skip: !token,
+  refetchOnMountOrArgChange: true, // <- force re-fetch when component remounts
+});
+const userProfile = data?.data || {};
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
@@ -75,9 +80,7 @@ const ViewProfile = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
                 {userProfile?.name || "User Name"}
               </h2>
-              <p className="text-gray-600 mb-4">
-                {userProfile?.email || "Email Not Provided"}
-              </p>
+
             </div>
 
             {/* Profile Information Grid */}
@@ -136,7 +139,9 @@ const ViewProfile = () => {
                       Date of Birth
                     </p>
                     <p className="text-gray-800 font-semibold">
-                      {userProfile?.dob.split("T")[0].split("-").reverse().join("-") || "Not provided"}
+                      {userProfile?.dob
+                        ? userProfile.dob.split("T")[0].split("-").reverse().join("-")
+                        : "Not provided"}
                     </p>
                   </div>
                 </div>
@@ -172,13 +177,15 @@ const ViewProfile = () => {
             </div>
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                className="h-12 bg-gradient-to-r from-[#2596be] to-[#2a3e97] hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg px-8"
-                disabled={isLoading}
-              >
-                <Edit3 className="w-5 h-5 mr-2" />
-                {isLoading ? "Editing..." : "Edit Profile"}
-              </Button>
+              <Link to="/edit-profile">
+                <Button
+                  className="h-12 bg-gradient-to-r from-[#2596be] to-[#2a3e97] hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg px-8"
+                  disabled={isLoading}
+                >
+                  <Edit3 className="w-5 h-5 mr-2" />
+                  {isLoading ? "Editing..." : "Edit Profile"}
+                </Button>
+              </Link>
 
               <Button
                 variant="outline"

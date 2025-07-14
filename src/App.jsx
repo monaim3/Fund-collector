@@ -16,6 +16,7 @@ import VoteDetails from './Pages/VoteDetails/VoteDetails';
 import VoteResult from './Pages/VoteResult/VoteResult';
 import ChangePass from './Pages/ChangePass/ChangePass';
 import ViewProfile from './Pages/ViewProfile/ViewProfile';
+import EditProfile from './Pages/EditProfile/EditProfile';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
            <Route path='vote/:id/result' element={<VoteResult />} />
            <Route path='change-password' element={<ChangePass/>} />
             <Route path="view-profile" element={<ViewProfile />} />
+            <Route path="edit-profile" element={<EditProfile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
