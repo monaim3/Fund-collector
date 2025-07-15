@@ -164,25 +164,64 @@ const EditProfile = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
    
-    try {
-      await userProfileEdit(formData).unwrap();
-      toast.success("Profile updated successfully",{
-        position: "top-right",
-        autoClose: 3000,
+  //   try {
+  //     await userProfileEdit(formData).unwrap();
+  //     toast.success("Profile updated successfully",{
+  //       position: "top-right",
+  //       autoClose: 3000,
       
-      });
-     navigate("/view-profile");
-    } catch (err) {
-      console.error("Update failed:", err);
-      toast.error("Failed to update profile.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  //     });
+  //      console.log("formData", formData);
+  //    navigate("/view-profile");
+  //   } catch (err) {
+  //     console.error("Update failed:", err);
+  //     toast.error("Failed to update profile.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  const formatDOBForOracle = (dob) => {
+    if (!dob) return "";
+
+    const dateObj = new Date(dob);
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const month = dateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase(); // e.g., "JUL"
+    const year = dateObj.getFullYear();
+
+    return `${day}-${month}-${year}`; // e.g., "28-JUL-2000"
   };
+
+  const formattedDOB = formatDOBForOracle(formData.dob);
+
+  try {
+    await userProfileEdit({
+      ...formData,
+      dob: formattedDOB,
+    }).unwrap();
+
+    toast.success("Profile updated successfully", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+
+    navigate("/view-profile");
+  } catch (err) {
+    console.error("Update failed:", err);
+    toast.error("Failed to update profile.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   if (loadingProfile) {
     return (
@@ -198,9 +237,9 @@ const EditProfile = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-[#2596be]/10 via-white to-[#2a3e97]/10">
       <div className="w-full max-w-lg">
-        <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-xl">
+        <Card className="border-0 shadow-2xl bg-white/95 backdrop-blur-xl py-0">
           <CardHeader className="text-center pb-8 bg-gradient-to-r from-[#2596be] to-[#2a3e97] text-white rounded-t-lg">
-            <div className="flex items-center justify-center mb-4">
+            <div className="flex items-center justify-center mb-4 mt-4">
               <div className="p-3 bg-white/20 rounded-full">
                 <Edit3 className="h-8 w-8 text-white" />
               </div>

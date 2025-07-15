@@ -1,28 +1,42 @@
 
-import { useRef, useState,useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../../assets/Images/logo.png";
+import { IoIosNotifications } from "react-icons/io";
+import { useGetNotificationQuery } from "../../store/services/api";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { data, isLoading } = useGetNotificationQuery();
+  const notifications = data?.data || [];
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (toggle && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setToggle(false);
-      }
-    };
+  let timeoutId;
 
-    // attach / detach listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [toggle]);
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setToggle(false);
+    }
+  };
+
+  if (toggle) {
+    // ⏳ Wait a bit before attaching the listener
+    timeoutId = setTimeout(() => {
+      document.addEventListener("click", handleClickOutside);
+    }, 50);
+  }
+
+  return () => {
+    clearTimeout(timeoutId);
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, [toggle]);
 
 
   const user = {
@@ -89,6 +103,10 @@ const Header = () => {
               </Button>
             </Link>
 
+             <div className="relative w-8 h-8 rounded-full flex items-center justify-center text-white">
+                <IoIosNotifications size={25} />
+                <span className="absolute top-[-10px] right-[-6px] w-5 h-5 text-white bg-red-500  rounded-full flex items-center justify-center">5</span>
+              </div>
             {/* Avatar Dropdown - Desktop */}
             <div className="relative">
               <label
@@ -101,6 +119,7 @@ const Header = () => {
                 </div>
               </label>
 
+             
               {toggle && (
                 <ul ref={dropdownRef} className="absolute right-0 mt-3 p-2 z-50 shadow bg-white text-black rounded-box w-52">
                   <li className="px-4 py-2 border-b">
@@ -142,8 +161,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-            }`}
+          className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-100" : "opacity-0 hidden"}`}
         >
           <nav className="py-4 space-y-2">
             {menuItems.map((item) => (
@@ -166,33 +184,33 @@ const Header = () => {
                 </Button>
               </Link>
             </div>
-
             {/* Avatar Dropdown - Mobile */}
-            <div className="px-4 pt-2">
-              <div className="relative">
-                <label
+            <div className="px-4 py-4 relative z-50">
+              <div className="relative" ref={dropdownRef}>
+                <div
                   onClick={() => setToggle(!toggle)}
-                  tabIndex={0}
                   className="flex items-center gap-2 cursor-pointer text-white"
                 >
                   <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white text-[#2a3e97]">
                     <FaUser size={20} />
                   </div>
-                  <span className="font-medium">
-                    {user?.displayName}
-                  </span>
-                </label>
+                  <span className="font-medium">{user?.displayName}</span>
+                </div>
 
                 {toggle && (
-                  <ul className="absolute right-4 mt-2 p-2 z-40 shadow bg-white text-black rounded-box w-52">
+                  <ul className="absolute left-0 mt-2 p-2 shadow bg-white text-black rounded-box w-full z-50">
                     <li className="px-4 py-2 border-b">
                       <span className="font-semibold">{user?.displayName}</span>
                     </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                      <Link to="/view-profile">View Profile</Link>
+                      <Link to="/view-profile" onClick={() => setTimeout(() => setToggle(false), 100)}>
+                        View Profile
+                      </Link>
                     </li>
                     <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-                      <Link to={"/change-password"}>Change Password</Link>
+                      <Link to="/change-password" onClick={() => setTimeout(() => setToggle(false), 100)}>
+                        Change Password
+                      </Link>
                     </li>
                     <li
                       onClick={() => {
@@ -201,12 +219,14 @@ const Header = () => {
                       }}
                       className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
                     >
-                      <a>Logout</a>
+                      <span>Logout</span>
                     </li>
                   </ul>
                 )}
               </div>
             </div>
+
+
           </nav>
         </div>
       </div>

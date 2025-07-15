@@ -129,7 +129,13 @@ export const api = createApi({
         body: profile,
       }),
       invalidatesTags: ["UserProfile"],
-    })
+    }),
+    getNotification: builder.query({
+      query: () => ({
+        url: "notification/all",
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -146,5 +152,6 @@ export const {
   useChangePasswordMutation,
   useGetUserProfileQuery,
   useGetVoteResultQuery,
-  useUserProfileEditMutation
+  useUserProfileEditMutation,
+  useGetNotificationQuery
 } = api;

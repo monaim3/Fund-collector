@@ -60,7 +60,7 @@ const userProfile = data?.data || {};
         </div>
 
         {/* Main Profile Card */}
-        <Card className="mb-8 overflow-hidden shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="mb-8 overflow-hidden shadow-2xl border-0 bg-white/80 backdrop-blur-sm py-0">
           <div className="bg-gradient-to-r from-[#2596be] to-[#2a3e97] h-32 relative">
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
@@ -182,18 +182,11 @@ const userProfile = data?.data || {};
                   className="h-12 bg-gradient-to-r from-[#2596be] to-[#2a3e97] hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg px-8"
                   disabled={isLoading}
                 >
-                  <Edit3 className="w-5 h-5 mr-2" />
+                  <Edit3 className="w-5 h-5 " />
                   {isLoading ? "Editing..." : "Edit Profile"}
                 </Button>
               </Link>
 
-              <Button
-                variant="outline"
-                className="h-12 border-2 border-gray-300 hover:border-blue-500 text-gray-700 hover:text-blue-600 font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 px-8"
-              >
-                <Shield className="w-5 h-5 mr-2" />
-                Privacy Settings
-              </Button>
             </div>
           </CardContent>
         </Card>

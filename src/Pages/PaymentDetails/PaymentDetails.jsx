@@ -1,159 +1,6 @@
 
-// import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import qrcode from '../../assets/Images/frame.png';
-// import { FaRegCopy } from 'react-icons/fa';
-// import { useGetTotalQuery, usePaymentSentMutation } from '../../store/services/api';
-// import { toast } from 'react-toastify';
-
-// const PaymentDetails = () => {
-//   const [formData, setFormData] = useState({
-//     amount: '',
-//     number: '',
-//     transactionId: '',
-//   });
-//   const [paymentSent, { data, error, isLoading }] = usePaymentSentMutation();
-//    const params = useParams();
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//   paymentSent({
-//     amount: formData.amount.trim(),
-//     paymentMethod: params.method,  
-//     number: formData.number.trim(),
-//     transactionId: formData.transactionId.trim(),
-
-//   })
-//   .unwrap()                        
-//   .then(() => toast.success('Payment details submitted successfully!'))
-//   .catch((err) => toast.error('Payment error:', err));
-//   setFormData({
-//         amount: '',
-//         number: '',
-//         transactionId: '',
-//         });
-//   };
-//  console.log('data',data);
-//   const user = {
-//     email: localStorage.getItem('userEmail'),
-//     displayName: localStorage.getItem('userName'),
-//   };
-// const copyNumber = () => {
-//   const number = '01615208833';
-//   navigator.clipboard.writeText(number).then(() => {
-//     toast.success('Number copied!', {
-//       position: 'top-center',
-//       autoClose: 1000,
-//       hideProgressBar: true,
-//     });
-//   });
-// };
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8">
-//       <div className="max-w-4xl mx-auto space-y-10">
-//         {/* Header */}
-//         <div className="text-center">
-//           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-//             Payment{' '}
-//             <span className="bg-gradient-to-br from-[#2596be] to-[#1d4ed8] text-transparent bg-clip-text">
-//               Instructions
-//             </span>
-//           </h1>
-//           <p className="text-md text-gray-600">
-//             Follow the instructions below to complete your payment.
-//           </p>
-//         </div>
-
-//         {/* QR Code */}
-//         <div className="flex flex-col items-center">
-//           <div className="w-40 h-40 flex items-center justify-center bg-gradient-to-br from-[#2596be] to-[#1d4ed8] rounded-2xl shadow-xl mb-4">
-//             <img src={qrcode} alt="QR Code" className="w-40 h-40 object-contain" />
-//           </div>
-//           <p className="text-lg text-gray-600 text-center">
-//             Scan this QR code with your mobile <br />wallet app to complete the payment.
-//           </p>
-//         </div>
-//         <div className="grid md:grid-cols-2 gap-6">
-//           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-//             <h3 className="text-sm text-gray-500">Personal Number</h3>
-//             <div className="flex items-center justify-center gap-2 mt-2">
-//               <p className="text-lg font-semibold text-gray-800">01615208833</p>
-//               <button className="hover:text-blue-600 transition" aria-label="Copy number" onClick={copyNumber}>
-//                 <FaRegCopy size={18} />
-//               </button>
-//             </div>
-//           </div>
-
-//           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-//             <h3 className="text-sm text-gray-500 mb-1">Reference</h3>
-//             <p className="text-md font-medium text-gray-700">
-//               Use <span className="font-semibold text-blue-700">{user.displayName}</span> as reference
-//             </p>
-//           </div>
-//         </div>
-//         <div className="bg-white rounded-lg shadow-xl p-6 mt-10">
-//       <h2 className="text-xl font-semibold text-gray-800 mb-4">Submit Your Payment Details</h2>
-//       <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit}>
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-//           <input
-//             type="number"
-//             name="amount"
-//             value={formData.amount}
-//             onChange={handleChange}
-//             placeholder="Enter amount"
-//             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-//           />
-//         </div>
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-1">Your Number</label>
-//           <input
-//             type="tel"
-//             name="number"
-//             value={formData.number}
-//             onChange={handleChange}
-//             placeholder="Enter your mobile number"
-//             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-//           />
-//         </div>
-//         <div className="md:col-span-2">
-//           <label className="block text-sm font-medium text-gray-700 mb-1">Transaction ID</label>
-//           <input
-//             type="text"
-//             name="transactionId"
-//             value={formData.transactionId}
-//             onChange={handleChange}
-//             placeholder="Enter transaction ID"
-//             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-//           />
-//         </div>
-//         <div className="md:col-span-2 text-right">
-//           <button
-//             type="submit"
-//             className="inline-block bg-gradient-to-br from-[#2596be] to-[#1d4ed8] text-white px-6 py-2 rounded-md font-semibold shadow-md hover:from-blue-700 hover:to-indigo-700 transition"
-//           >
-//             Submit Payment
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PaymentDetails;
-
-
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Copy, QrCode, CreditCard, Smartphone, CheckCircle, AlertCircle } from 'lucide-react';
 import qrcode from '../../assets/Images/frame.png';
 import { useGetTotalQuery, usePaymentSentMutation } from '../../store/services/api';
@@ -212,20 +59,19 @@ const PaymentDetails = () => {
   };
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/payment");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8 z-0">
       <div className="container  mx-auto  px-4 sm:px-6 lg:px-8">
         <div className="mb-8 absolute top-36 hidden lg:block">
-          <button
-            onClick={handleBack}
+          <Link to="/payment"
             className="group flex items-center space-x-2 bg-white hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
             <span className="font-medium">Back</span>
-          </button>
+          </Link>
         </div>
 
         {/* Header Section */}

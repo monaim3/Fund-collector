@@ -1,55 +1,11 @@
-// import React from 'react';
-// import Loading from '../../components/ui/Loading';
-// import { useGetPaymentHistoryQuery } from '../../store/services/api';
-
-// const History = () => {
-//     const token = localStorage.getItem('authToken');
-//     const { data, error, isLoading } = useGetPaymentHistoryQuery(token, {
-//         skip: !token,
-//     });
-//     const paymentHistory = data?.data || [];
-//     if (isLoading) {
-//         return <div><Loading /></div>;
-//     }
-//     return (
-//         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8">
-//             <div className="container mx-auto  px-4 sm:px-6 lg:px-8">
-//                 <h1 className='text-center text-xl md:text-3xl font-semibold text-gray-800'>Payment History</h1>
-//                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-6'>
-//                     {paymentHistory?.map((item) => (
-//                         <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
-//                             <h2 className="font-semibold">#{item.id}</h2>
-//                             <p className="text-gray-600">{item.paymentMethod}</p>
-//                            <div>
-//                              <p className="text-gray-800 font-bold">{item.status}</p>
-//                                 <p className="text-gray-600">৳  {item.amount} BDT</p>
-//                            </div>
-//                             <p className="text-gray-600">{(item.depositDate).split("T")[0].split("-").reverse().join("-")}</p>
-//                         </div>
-//                     ))}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default History;
 
 
 import React from 'react';
 import { CreditCard, Smartphone, Building2, CheckCircle, Clock, XCircle, Calendar, DollarSign } from 'lucide-react';
 import { useGetPaymentHistoryQuery } from '../../store/services/api';
+import Loading from '../../components/ui/Loading';
 
-const Loading = () => (
-  <div className="flex items-center justify-center min-h-[400px]">
-    <div className="relative">
-      <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 bg-indigo-600 rounded-full animate-pulse"></div>
-      </div>
-    </div>
-  </div>
-);
+
 
 const History = () => {
     const token = localStorage.getItem('authToken');

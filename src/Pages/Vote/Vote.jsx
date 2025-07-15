@@ -47,7 +47,7 @@ const Vote = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen lg:h-[20vh] bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
         {/* Header */}
@@ -133,3 +133,4 @@ const Vote = () => {
 };
 
 export default Vote;
+
