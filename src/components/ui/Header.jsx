@@ -11,32 +11,34 @@ import { useGetNotificationQuery } from "../../store/services/api";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
   const [toggle, setToggle] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { data, isLoading } = useGetNotificationQuery();
   const notifications = data?.data || [];
   useEffect(() => {
-  let timeoutId;
+    let timeoutId;
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setToggle(false);
+        setShowNotification(false);
+      }
+    };
 
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setToggle(false);
+    if (toggle || showNotification) {
+      timeoutId = setTimeout(() => {
+        document.addEventListener("click", handleClickOutside);
+      }, 50);
     }
-  };
 
-  if (toggle) {
-    // ⏳ Wait a bit before attaching the listener
-    timeoutId = setTimeout(() => {
-      document.addEventListener("click", handleClickOutside);
-    }, 50);
-  }
+    return () => {
+      clearTimeout(timeoutId);
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [toggle, showNotification]);
 
-  return () => {
-    clearTimeout(timeoutId);
-    document.removeEventListener("click", handleClickOutside);
-  };
-}, [toggle]);
 
 
   const user = {
@@ -103,10 +105,42 @@ const Header = () => {
               </Button>
             </Link>
 
-             <div className="relative w-8 h-8 rounded-full flex items-center justify-center text-white">
+            <div className="relative" ref={dropdownRef}>
+              <div
+                onClick={() => setShowNotification((prev) => !prev)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white cursor-pointer"
+              >
                 <IoIosNotifications size={25} />
-                <span className="absolute top-[-10px] right-[-6px] w-5 h-5 text-white bg-red-500  rounded-full flex items-center justify-center">5</span>
+                {notifications?.length > 0 && (
+                  <span className="absolute top-[-10px] right-[-6px] w-5 h-5 text-white bg-red-500 rounded-full text-xs flex items-center justify-center">
+                    {notifications.length}
+                  </span>
+                )}
               </div>
+
+              {/* Dropdown for notifications */}
+              {showNotification && (
+                <div className="absolute right-0 mt-3 w-80 z-50 bg-white text-black rounded-lg shadow-lg overflow-hidden">
+                  <div className="max-h-96 overflow-y-auto">
+                    {notifications.length === 0 ? (
+                      <div className="p-4 text-sm text-gray-500">No new notifications</div>
+                    ) : (
+                      notifications.map((notif) => (
+                        <div
+                          key={notif.id}
+                          className={`px-4 py-3 border-b hover:bg-gray-100 transition duration-200 ${notif.isRead === "N" ? "bg-blue-50" : ""
+                            }`}
+                        >
+                          <p className="font-semibold">{notif.title}</p>
+                          <p className="text-sm text-gray-600">{notif.message}</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Avatar Dropdown - Desktop */}
             <div className="relative">
               <label
@@ -119,7 +153,7 @@ const Header = () => {
                 </div>
               </label>
 
-             
+
               {toggle && (
                 <ul ref={dropdownRef} className="absolute right-0 mt-3 p-2 z-50 shadow bg-white text-black rounded-box w-52">
                   <li className="px-4 py-2 border-b">

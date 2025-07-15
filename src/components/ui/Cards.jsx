@@ -7,6 +7,7 @@ import {
 } from 'react-icons/fa';
 import { useGetTotalQuery } from '../../store/services/api';
 import Loading from './Loading';
+import { useSelector } from 'react-redux';
 
 const Cards = () => {
     const token = localStorage.getItem('authToken');
@@ -14,7 +15,8 @@ const Cards = () => {
     skip: !token,
   });
    const apiData = data?.data;
-
+const userinfo = useSelector(state => state.common.userInfo);
+   console.log("userinfo", userinfo);
   const cardData = [
     {
       id: 1,
@@ -58,8 +60,8 @@ const Cards = () => {
     },
   ];
   const user = {
-    email: localStorage.getItem('userEmail'),
-    displayName: localStorage.getItem('userName'),
+    email: userinfo?.email,
+    displayName: userinfo?.displayName,
   };
   if (isLoading) {
     return (
