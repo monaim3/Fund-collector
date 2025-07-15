@@ -31,20 +31,6 @@ const userProfile = data?.data || {};
     );
   }
 
-  const profileStats = [
-    {
-      label: "Total Events",
-      value: userProfile?.totalEvent || "0",
-      icon: Calendar,
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      label: "Profile Status",
-      value: "Active",
-      icon: Shield,
-      color: "from-green-500 to-green-600",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4">

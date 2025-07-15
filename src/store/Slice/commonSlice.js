@@ -4,10 +4,7 @@ const initialState = {
   eventList: [],
   isOpen: true,
   saveVote: null,
-  userInfo: {
-    username: "",
-    email: ""
-  }
+ 
 };
 const commonSlice = createSlice({
   name: "common",
@@ -20,9 +17,6 @@ const commonSlice = createSlice({
 
     setEventList: (state, action) => {
       state.eventList = action.payload;
-    },
-    setUserInfo: (state, action) => {
-      state.userInfo = action.payload;
     },
     setSaveVote: (state, action) => {
       state.saveVote = action.payload

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Copy, QrCode, CreditCard, Smartphone, CheckCircle, AlertCircle } from 'lucide-react';
 import qrcode from '../../assets/Images/frame.png';
-import { useGetTotalQuery, usePaymentSentMutation } from '../../store/services/api';
+import { useGetTotalQuery, useGetUserProfileQuery, usePaymentSentMutation } from '../../store/services/api';
 import { toast } from 'react-toastify';
 
 const PaymentDetails = () => {
@@ -15,7 +15,21 @@ const PaymentDetails = () => {
   const [paymentSent, { data, error, isLoading }] = usePaymentSentMutation();
   const params = useParams();
   const navigate = useNavigate();
-
+    const token = localStorage.getItem('authToken');
+      const {
+          data: profileData,
+          isLoading: profileLoading,
+      } = useGetUserProfileQuery(token, {
+          skip: !token,
+          refetchOnMountOrArgChange: true,
+      });
+  
+      const userProfile = profileData?.data || {};
+      const user = {
+          email: userProfile?.email,
+          displayName: userProfile?.name,
+          roll: userProfile?.roll
+      };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -42,10 +56,7 @@ const PaymentDetails = () => {
     });
   };
 
-  const user = {
-    email: localStorage.getItem('userEmail'),
-    displayName: localStorage.getItem('userName'),
-  };
+ 
 
   const copyNumber = () => {
     const number = '01615208833';

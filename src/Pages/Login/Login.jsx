@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 const Login = () => {
     const navigate = useNavigate();
     const [login, { isLoading }] = useLoginMutation();
-    const dispatch=useDispatch()
     const [formData, setFormData] = useState({
         rollNumber: '',
         password: '',
@@ -47,14 +46,6 @@ const Login = () => {
             // Success
             if (data?.status_code === 200 && data?.token) {
                 localStorage.setItem('authToken', data.token);
-                localStorage.setItem('userName', data.name);
-                localStorage.setItem('userRoll', formData.rollNumber);
-                dispatch(setUserInfo({ 
-                username: data.name, 
-                email: data.email || null,
-                roll: formData.rollNumber,
-               
-            }));
                 toast.success('Login successful!', {
                     position: "top-right",
                     autoClose: 5000,

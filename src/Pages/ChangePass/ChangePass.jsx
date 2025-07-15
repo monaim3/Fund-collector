@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useChangePasswordMutation } from '../../store/services/api';
+import { useChangePasswordMutation, useGetUserProfileQuery } from '../../store/services/api';
 import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,23 @@ import { useNavigate } from 'react-router-dom';
 const ChangePass = () => {
     const [changePassword, { isLoading }] = useChangePasswordMutation();
     const navigate = useNavigate();
+    const token = localStorage.getItem('authToken');
+    const {
+        data: profileData,
+        isLoading: profileLoading,
+    } = useGetUserProfileQuery(token, {
+        skip: !token,
+        refetchOnMountOrArgChange: true,
+    });
 
+    const userProfile = profileData?.data || {};
+    const user = {
+        email: userProfile?.email,
+        displayName: userProfile?.name,
+        roll: userProfile?.roll
+    };
+
+    console.log("user", user)
     const [formData, setFormData] = useState({
         password: '',
         new_password: '',
@@ -52,7 +68,7 @@ const ChangePass = () => {
             const res = await changePassword({
                 password: formData.password,
                 new_password: formData.new_password,
-                roll: localStorage.getItem('userRoll'),
+                roll: user.roll,
             }).unwrap();
 
             if (res?.status_code === 200) {

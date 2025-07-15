@@ -7,12 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../../assets/Images/logo.png";
 import { IoIosNotifications } from "react-icons/io";
-import { useGetNotificationQuery } from "../../store/services/api";
+import { useGetNotificationQuery, useGetUserProfileQuery } from "../../store/services/api";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
-
+  const token = localStorage.getItem("authToken");
   const [toggle, setToggle] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -40,10 +40,18 @@ const Header = () => {
   }, [toggle, showNotification]);
 
 
+const {
+    data: profileData,
+    isLoading: profileLoading,
+  } = useGetUserProfileQuery(token, {
+    skip: !token,
+    refetchOnMountOrArgChange: true,
+  });
 
-  const user = {
-    email: localStorage.getItem("userEmail"),
-    displayName: localStorage.getItem("userName"),
+  const userProfile = profileData?.data || {};
+    const user = {
+    email: userProfile?.email,
+    displayName: userProfile?.name
   };
 
   const menuItems = [

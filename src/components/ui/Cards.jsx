@@ -5,18 +5,25 @@ import {
   FaUsers,
   FaChartLine
 } from 'react-icons/fa';
-import { useGetTotalQuery } from '../../store/services/api';
+import { useGetTotalQuery, useGetUserProfileQuery } from '../../store/services/api';
 import Loading from './Loading';
 import { useSelector } from 'react-redux';
 
 const Cards = () => {
-    const token = localStorage.getItem('authToken');
-   const { data, error, isLoading } = useGetTotalQuery(undefined, {
+  const token = localStorage.getItem('authToken');
+  const { data, error, isLoading } = useGetTotalQuery(undefined, {
     skip: !token,
   });
-   const apiData = data?.data;
-const userinfo = useSelector(state => state.common.userInfo);
-   console.log("userinfo", userinfo);
+  const apiData = data?.data;
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+  } = useGetUserProfileQuery(token, {
+    skip: !token,
+    refetchOnMountOrArgChange: true,
+  });
+
+  const userProfile = profileData?.data || {};
   const cardData = [
     {
       id: 1,
@@ -60,12 +67,12 @@ const userinfo = useSelector(state => state.common.userInfo);
     },
   ];
   const user = {
-    email: userinfo?.email,
-    displayName: userinfo?.displayName,
+    email: userProfile?.email,
+    displayName: userProfile?.name
   };
   if (isLoading) {
     return (
-     <Loading></Loading>
+      <Loading></Loading>
     );
   }
   return (
