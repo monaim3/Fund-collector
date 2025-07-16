@@ -41,9 +41,7 @@ const Login = () => {
             const data = await login({
                 roll: formData.rollNumber,
                 password: formData.password,
-            }).unwrap(); // throws on error
-            console.log("data", data)
-            // Success
+            }).unwrap(); 
             if (data?.status_code === 200 && data?.token) {
                 localStorage.setItem('authToken', data.token);
                 toast.success('Login successful!', {

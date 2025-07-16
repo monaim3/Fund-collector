@@ -135,7 +135,15 @@ export const api = createApi({
         url: "notification/all",
         method: "GET",
       }),
+        providesTags: ["Notification"],
     }),
+    notificationRead: builder.mutation({
+      query: (id) => ({
+        url: `notification/read/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Notification"],
+    })
   }),
 });
 export const {
@@ -153,5 +161,6 @@ export const {
   useGetUserProfileQuery,
   useGetVoteResultQuery,
   useUserProfileEditMutation,
-  useGetNotificationQuery
+  useGetNotificationQuery,
+  useNotificationReadMutation
 } = api;
