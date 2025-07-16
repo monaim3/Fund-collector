@@ -215,7 +215,6 @@ const handleSubmit = async (e) => {
 
     navigate("/view-profile");
   } catch (err) {
-    console.error("Update failed:", err);
     toast.error("Failed to update profile.");
   } finally {
     setIsSubmitting(false);

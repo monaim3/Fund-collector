@@ -13,7 +13,6 @@ const VoteResult = () => {
 
    const { data, isLoading } = useGetVoteResultQuery(id, token, { skip: !token });
   const voteResults = data?.data || []; 
-  console.log("Vote Results:", voteResults);
   const [animatedResults, setAnimatedResults] = useState([]);
   const totalVotes = voteResults?.reduce((sum, result) => sum + result.vote_count, 0) || 0;
 

@@ -59,7 +59,6 @@ const Login = () => {
                 });
             }
         } catch (error) {
-            console.error('Login error:', error);
             const message = error?.data?.message || 'Login failed!';
             toast.error(message, {
                 position: "top-right",

@@ -141,7 +141,7 @@ const userProfile = data?.data || {};
                       Member Since
                     </p>
                     <p className="text-gray-800 font-semibold">
-                      {userProfile?.joinDate || "Not provided"}
+                      {userProfile?.joinDate.split("T")[0].split("-").reverse().join("-")  || "Not provided"}
                     </p>
                   </div>
                 </div>

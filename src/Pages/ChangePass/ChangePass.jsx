@@ -25,8 +25,6 @@ const ChangePass = () => {
         displayName: userProfile?.name,
         roll: userProfile?.roll
     };
-
-    console.log("user", user)
     const [formData, setFormData] = useState({
         password: '',
         new_password: '',
