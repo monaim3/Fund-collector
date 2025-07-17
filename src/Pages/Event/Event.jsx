@@ -12,7 +12,7 @@ const Event = () => {
         skip: !token,
     });
     const apiData = data?.data;
-    const EventList =useSelector((state)=> state.common.eventList)
+    const EventList = useSelector((state) => state.common.eventList)
     if (isLoading) {
         return <Loading />;
     }
@@ -37,7 +37,7 @@ const Event = () => {
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="text-xl font-semibold text-gray-800 group-hover:text-[#2a3e97] transition-colors duration-200 mt-[-px]">
-                                            {card.eventName}
+                                            {card?.eventName}
                                         </h3>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@ const Event = () => {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-gray-600 font-medium">
-                                            {card.eventDate.split('T')[0]}
+                                            {card?.eventDate?.split('T')[0]}
                                         </p>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@ const Event = () => {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-gray-600 text-sm leading-relaxed">
-                                            {card.note}
+                                            {card?.note}
                                         </p>
                                     </div>
                                 </div>
@@ -74,20 +74,20 @@ const Event = () => {
                                             <MdAttachMoney className="w-4 h-4 text-emerald-600" />
                                         </div>
                                     </div>
-                                    <div className="flex-1">
+                                    <div className="flex gap-4 justify-center items-center">
                                         <p className="text-sm text-gray-500 mb-1"> Expense</p>
                                         <p className="text-lg font-semibold text-gray-800">
-                                             {EventList[0]?.amount}
+                                            <span className='w-4    '>৳</span> {card?.totalExpense}
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-                               <Link
-                                to={`/event/${card.id}`} className="text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
+                                <Link
+                                    to={`/event/${card.id}`} className="text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
                                     <button className="w-full bg-gradient-to-r from-[#2596be] to-[#2a3e97] text-white font-medium py-2 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                    View Details
-                                </button>
+                                        View Details
+                                    </button>
                                 </Link>
                             </div>
                         </div>

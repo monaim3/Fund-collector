@@ -138,7 +138,7 @@ export const api = createApi({
         providesTags: ["Notification"],
     }),
     notificationRead: builder.mutation({
-      query: (id) => ({
+      query: ({ id }) => ({
         url: `notification/read/${id}`,
         method: "PUT",
       }),

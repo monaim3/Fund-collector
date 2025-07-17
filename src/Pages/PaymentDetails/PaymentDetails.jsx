@@ -15,21 +15,21 @@ const PaymentDetails = () => {
   const [paymentSent, { data, error, isLoading }] = usePaymentSentMutation();
   const params = useParams();
   const navigate = useNavigate();
-    const token = localStorage.getItem('authToken');
-      const {
-          data: profileData,
-          isLoading: profileLoading,
-      } = useGetUserProfileQuery(token, {
-          skip: !token,
-          refetchOnMountOrArgChange: true,
-      });
-  
-      const userProfile = profileData?.data || {};
-      const user = {
-          email: userProfile?.email,
-          displayName: userProfile?.name,
-          roll: userProfile?.roll
-      };
+  const token = localStorage.getItem('authToken');
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+  } = useGetUserProfileQuery(token, {
+    skip: !token,
+    refetchOnMountOrArgChange: true,
+  });
+
+  const userProfile = profileData?.data || {};
+  const user = {
+    email: userProfile?.email,
+    displayName: userProfile?.name,
+    roll: userProfile?.roll
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -42,13 +42,13 @@ const PaymentDetails = () => {
     e.preventDefault();
     paymentSent({
       amount: formData.amount.trim(),
-      paymentMethod: params.method,  
+      paymentMethod: params.method,
       number: formData.number.trim(),
       transactionId: formData.transactionId.trim(),
     })
-    .unwrap()                        
-    .then(() => toast.success('Payment details submitted successfully!'))
-    .catch((err) => toast.error('Payment error:', err));
+      .unwrap()
+      .then(() => toast.success('Payment details submitted successfully!'))
+      .catch((err) => toast.error('Payment error:', err));
     setFormData({
       amount: '',
       number: '',
@@ -56,7 +56,7 @@ const PaymentDetails = () => {
     });
   };
 
- 
+
 
   const copyNumber = () => {
     const number = '01615208833';
@@ -76,18 +76,20 @@ const PaymentDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8 z-0">
       <div className="container  mx-auto  px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 absolute top-36 hidden lg:block">
-          <Link to="/payment"
+        {/* <div className="mb-8 absolute top-36 hidden lg:block"> */}
+        <div className="mb-8 absolute top-36 block">
+          <button
+            onClick={() =>  navigate(-1)}
             className="group flex items-center space-x-2 bg-white hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
             <span className="font-medium">Back</span>
-          </Link>
+          </button>
         </div>
 
         {/* Header Section */}
         <div className="text-center mb-12 relative z-10">
-          
+
           <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800 mb-2">
             Payment{' '}
             <span className="bg-gradient-to-br from-[#2596be] to-[#1d4ed8] text-transparent bg-clip-text">
@@ -97,16 +99,16 @@ const PaymentDetails = () => {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Follow the simple steps below to complete your secure payment transaction
           </p>
-         
+
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           {/* QR Code Section */}
           <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
             <div className="text-center">
-              
+
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Scan QR Code</h2>
-              
+
               {/* QR Code Container */}
               <div className="relative inline-block">
                 <div className="w-64 h-64 bg-gradient-to-br from-[#2596be] to-[#1d4ed8]  rounded-3xl p-4 shadow-2xl">
@@ -273,7 +275,7 @@ const PaymentDetails = () => {
             <div>
               <h3 className="font-semibold text-blue-900 mb-2">Secure Payment</h3>
               <p className="text-blue-700 text-sm leading-relaxed">
-                Your payment information is encrypted and secure. We never store your sensitive financial data. 
+                Your payment information is encrypted and secure. We never store your sensitive financial data.
                 Please double-check all details before submitting your payment information.
               </p>
             </div>

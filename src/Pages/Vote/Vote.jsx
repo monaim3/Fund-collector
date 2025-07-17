@@ -113,7 +113,15 @@ const Vote = () => {
                   </div>
 
                   {/* CTA */}
-                 <Link to={`/vote/${vote.id}`}>
+                { vote.isExpired ? (
+                    <Link to={`/vote/${vote.id}/result`}>
+                      <Button variant="outline" className="w-full bg-gradient-to-br from-[#2596be] to-[#1d4ed8] hover:from-indigo-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
+                    size="lg">
+                      See Results
+                    </Button>
+                    </Link>
+                  ) : (
+                    <Link to={`/vote/${vote.id}`}>
                    <Button
                     className="w-full bg-gradient-to-br from-[#2596be] to-[#1d4ed8] hover:from-indigo-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
                     size="lg"
@@ -122,6 +130,7 @@ const Vote = () => {
                     Vote Now
                   </Button>
                   </Link>
+                  )}
                 </CardContent>
               </Card>
             ))}
