@@ -16,7 +16,7 @@ const Vote = () => {
   const token = localStorage.getItem('authToken');
   const { data, isLoading } = useGetVoteQuery(null, { skip: !token });
   const voteList = data?.data || [];
-
+  console.log("Vote List:", voteList);
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
@@ -54,8 +54,9 @@ const Vote = () => {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
             <MdHowToVote className="w-8 h-8 text-indigo-600 mr-3" />
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Active Votes
+            <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800  mb-3">
+              <span>Active  </span>
+              <span className='bg-gradient-to-br from-[#2596be] to-[#2a3e97] bg-clip-text text-transparent'>Votes</span>
             </h1>
           </div>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -111,9 +112,9 @@ const Vote = () => {
                       <span>{new Date(vote.expiresAt).toLocaleDateString()}</span>
                     </div>
                   </div>
-
+                   {console.log("vote.isExpired :", vote.isExpired )}
                   {/* CTA */}
-                { vote.isExpired ? (
+                { vote.isExpired === "TRUE" ? (
                     <Link to={`/vote/${vote.id}/result`}>
                       <Button variant="outline" className="w-full bg-gradient-to-br from-[#2596be] to-[#1d4ed8] hover:from-indigo-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
                     size="lg">

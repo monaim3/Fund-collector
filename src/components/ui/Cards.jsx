@@ -8,6 +8,8 @@ import {
 import { useGetTotalQuery, useGetUserProfileQuery } from '../../store/services/api';
 import Loading from './Loading';
 import { useSelector } from 'react-redux';
+import LineChartComponent from './LineChartComponent';
+import PieChartComponent from './PieChartComponent';
 
 const Cards = () => {
   const token = localStorage.getItem('authToken');
@@ -83,14 +85,14 @@ const Cards = () => {
           <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800 mb-2">
             <span
               className="
-    text-4xl font-extrabold
+    text-4xl font-bold
     text-transparent bg-clip-text
     bg-gradient-to-r from-[#2596be] via-[#4079ff] to-[#40ffaa]
     bg-[length:200%_200%] bg-[position:0%_50%]
     animate-gradient-x
   "
             >
-             Welcome  {user?.displayName}
+              Welcome  {user?.displayName}
             </span>
             {/* <span className='font-light'>Welcome </span>
             {user?.displayName} */}
@@ -109,22 +111,21 @@ const Cards = () => {
                 key={card.id}
                 className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden"
               >
-                {/* Gradient Background */}
+           
                 <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
 
-                {/* Card Content */}
+               
                 <div className="relative p-6">
-                  {/* Icon Section */}
+           
                   <div className={`inline-flex items-center justify-center w-14 h-14 ${card.bgColor} rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <IconComponent className={`w-7 h-7 ${card.iconColor}`} />
                   </div>
 
-                  {/* Title */}
+              
                   <h3 className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors duration-300">
                     {card.title}
                   </h3>
 
-                  {/* Value */}
                   <div className="mb-3">
                     <span className="text-3xl md:text-4xl font-bold text-gray-900 group-hover:bg-gradient-to-r group-hover:from-[#d03e27] group-hover:to-[#2a3e97] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                       {card.value}
@@ -140,7 +141,7 @@ const Cards = () => {
             );
           })}
         </div>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <h4 className="text-lg font-semibold text-gray-800 mb-2">Quick Stats</h4>
             <div className="space-y-3">
@@ -200,7 +201,29 @@ const Cards = () => {
               </div>
             </div>
           </div>
+        </div> */}
+
+        {/* Linechart */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+         <div>
+             {apiData && (
+          <LineChartComponent
+            fund={apiData.totalFund}
+            expense={apiData.totalExpense}
+          />
+        )}
+         </div>
+
+         <div>
+          {apiData && (
+          <PieChartComponent
+            expense={apiData.totalExpense}
+            balance={apiData.totalBalance}
+          />
+        )}
+         </div>
         </div>
+
       </div>
     </div>
   );

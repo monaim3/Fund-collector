@@ -112,7 +112,7 @@ const Header = () => {
                 }
                 setShowNotification(false);
                 setIsMenuOpen(false); // close mobile menu too
-                navigate(`/${notif.url}`);
+                navigate(notif.url ? `/${notif.url}` : "/");
               }}
             >
               <p className="font-semibold">{notif.title}</p>

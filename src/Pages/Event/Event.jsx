@@ -20,7 +20,7 @@ const Event = () => {
         <div className='min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 md:p-6 lg:p-8 relative overflow-hidden'>
             <div className="container mx-auto  px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-8">
-                    <h1 className='text-3xl md:text-4xl font-bold text-gray-800 mb-2'>Events</h1>
+                    <h1 className='text-3xl text-center md:text-4xl font-semibold text-gray-800  mb-3'>Events</h1>
                     <p className="text-gray-600 text-lg">All Events are listed here</p>
                 </div>
 

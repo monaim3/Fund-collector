@@ -18,7 +18,7 @@ const Payment = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] p-6 lg:p-10">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
+        <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800  mb-6">
           Select <span className="bg-gradient-to-br from-[#2596be] to-[#1d4ed8] text-transparent bg-clip-text">Payment Method</span>
         </h1>
 
