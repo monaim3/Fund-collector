@@ -85,15 +85,15 @@ const Cards = () => {
               className="
     text-4xl font-extrabold
     text-transparent bg-clip-text
-    bg-gradient-to-r from-[#40ffaa] via-[#4079ff] to-[#40ffaa]
+    bg-gradient-to-r from-[#2596be] via-[#4079ff] to-[#40ffaa]
     bg-[length:200%_200%] bg-[position:0%_50%]
     animate-gradient-x
   "
             >
-              Animated Gradient Text!
+             Welcome  {user?.displayName}
             </span>
-            <span className='font-light'>Welcome </span>
-            {user?.displayName}
+            {/* <span className='font-light'>Welcome </span>
+            {user?.displayName} */}
           </h1>
           <p className="text-gray-600 text-center text-lg">
             A quick glance at your current fund status and activities.
