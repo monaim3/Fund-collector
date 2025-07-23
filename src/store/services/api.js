@@ -91,6 +91,12 @@ export const api = createApi({
         method: "GET",
       }),
     }),
+    getOptionId: builder.query({
+      query: (id) => ({
+        url: `poll/user-vote/${id}`,
+        method: "GET",
+      }), 
+    }),
     sendVote: builder.mutation({
       query: ({ pollID, optionID }) => ({
         url: `poll/poll-vote`,
@@ -162,5 +168,6 @@ export const {
   useGetVoteResultQuery,
   useUserProfileEditMutation,
   useGetNotificationQuery,
-  useNotificationReadMutation
+  useNotificationReadMutation,
+  useGetOptionIdQuery
 } = api;

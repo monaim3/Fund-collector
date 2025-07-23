@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/ui/Loading';
-import { useGetSingleVoteQuery, useSendVoteMutation } from '../../store/services/api';
+import { useGetOptionIdQuery, useGetSingleVoteQuery, useSendVoteMutation } from '../../store/services/api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setSaveVote } from '../../store/Slice/commonSlice';
@@ -15,12 +15,16 @@ const VoteDetails = () => {
   const { data, error, isLoading } = useGetSingleVoteQuery(id, {
     skip: !token,
   });
+ const {data: option, } = useGetOptionIdQuery(id);
+ const options = option?.data?.optionID
 
   const [selectedId, setSelectedId] = useState(null);
+
   const [sendVote, { data: voteData, error: voteError, isLoading: voteLoading }] = useSendVoteMutation();
   const handleSubmit = e => {
     e.preventDefault();
-    sendVote({ pollID: id, optionID: selectedId }).unwrap()
+    console.log("pollID:", id, "optionID:", options);
+    sendVote({pollID: String(id), optionID: String(options)}).unwrap()
       .then((res) => {
         if (res?.data) {
           dispatch(setSaveVote(res.data));
