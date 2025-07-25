@@ -77,7 +77,7 @@ const PaymentDetails = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 lg:p-8 z-0">
       <div className="container  mx-auto  px-4 sm:px-6 lg:px-8">
         {/* <div className="mb-8 absolute top-36 hidden lg:block"> */}
-        <div className="mb-8 absolute top-36 block">
+        <div className="mb-8 absolute top-36  hidden lg:block">
           <button
             onClick={() =>  navigate(-1)}
             className="group flex items-center space-x-2 bg-white hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"

@@ -17,6 +17,7 @@ const VoteDetails = () => {
   });
 
   const [selectedId, setSelectedId] = useState(null);
+  console.log("Selected ID:", selectedId);
   const [sendVote, { data: voteData, error: voteError, isLoading: voteLoading }] = useSendVoteMutation();
   const handleSubmit = e => {
     e.preventDefault();
@@ -36,7 +37,6 @@ const VoteDetails = () => {
         toast.error("Vote error");
       });
   };
-
   if (isLoading) return <Loading />;
   if (error) return <p className="text-red-600">Something went wrong.</p>;
 

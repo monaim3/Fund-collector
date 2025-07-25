@@ -31,7 +31,7 @@ const customBaseQuery = async (args, api, extraOptions) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: customBaseQuery,
-   tagTypes: ["UserProfile"],
+   tagTypes: ["UserProfile", "voteResult", "Vote"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ roll, password }) => ({
@@ -98,12 +98,14 @@ export const api = createApi({
         headers: { "Content-Type": "application/json" },
         body: { pollID, optionID },
       }),
+      invalidatesTags: ["voteResult", "Vote"],
     }),
     getVoteResult: builder.query({
       query: (id) => ({
         url: `poll/result/${id}`,
         method: "GET",
       }),
+      providesTags: ["voteResult"],
     }),
     changePassword: builder.mutation({
       query: ({ new_password, password, roll }) => ({

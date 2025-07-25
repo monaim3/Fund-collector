@@ -65,7 +65,7 @@ const VoteResult = () => {
   if (isLoading) return <Loading />;
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12  ">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-6  ">
         <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -90,7 +90,7 @@ const VoteResult = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-6">
         {!voteResults || voteResults.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
@@ -158,8 +158,7 @@ const VoteResult = () => {
                             {result.title}
                           </h3>
                           <div className="flex items-center space-x-4 text-sm text-gray-600">
-                            <span className="font-medium">Rank #{index + 1}</span>
-                            <span>•</span>
+                           
                             <span>{animatedResults[index]?.votes?.toLocaleString() || 0} votes</span>
                           </div>
                         </div>

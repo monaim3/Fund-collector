@@ -90,7 +90,7 @@ const Header = () => {
   };
 
   const renderNotificationDropdown = () => (
-    <div className="absolute right-0 mt-3 w-80 z-50 bg-white text-black rounded-lg shadow-lg overflow-hidden">
+    <div className="absolute right-0 mt-8 w-80 z-50 bg-white text-black rounded-lg shadow-lg overflow-hidden">
       <div className="max-h-96 overflow-y-auto">
         {notifications.length === 0 ? (
           <div className="p-4 text-sm text-gray-500">No new notifications</div>
@@ -210,7 +210,21 @@ const Header = () => {
               )}
             </div>
           </nav>
-
+             {/* 🔔 Mobile Notifications */}
+            <div className="px-4 py-2 relative block md:hidden lg:hidden" ref={dropdownRef}>
+              <div
+                onClick={() => setShowNotification((prev) => !prev)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white cursor-pointer"
+              >
+                <IoIosNotifications size={25} />
+                {unreadCount > 0 && (
+                  <span className="absolute top-[-5px] right-[-10px] w-5 h-5 text-white bg-red-500 rounded-full text-xs flex items-center justify-center">
+                    {unreadCount}
+                  </span>
+                )}
+              </div>
+              {showNotification && renderNotificationDropdown()}
+            </div>
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={toggleMenu}
@@ -245,21 +259,7 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* 🔔 Mobile Notifications */}
-            <div className="px-4 py-2 relative" ref={dropdownRef}>
-              <div
-                onClick={() => setShowNotification((prev) => !prev)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white cursor-pointer"
-              >
-                <IoIosNotifications size={25} />
-                {unreadCount > 0 && (
-                  <span className="absolute top-[-5px] right-[-10px] w-5 h-5 text-white bg-red-500 rounded-full text-xs flex items-center justify-center">
-                    {unreadCount}
-                  </span>
-                )}
-              </div>
-              {showNotification && renderNotificationDropdown()}
-            </div>
+         
 
             {/* Mobile Avatar */}
             <div className="px-4 py-4 relative z-50">

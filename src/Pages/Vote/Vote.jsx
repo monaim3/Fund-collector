@@ -14,9 +14,10 @@ import { Link } from 'react-router-dom';
 
 const Vote = () => {
   const token = localStorage.getItem('authToken');
-  const { data, isLoading } = useGetVoteQuery(null, { skip: !token });
+ const { data, isLoading } = useGetVoteQuery(undefined, {
+  refetchOnMountOrArgChange: true,
+});
   const voteList = data?.data || [];
-  console.log("Vote List:", voteList);
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
