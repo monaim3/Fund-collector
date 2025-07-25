@@ -17,12 +17,13 @@ const VoteDetails = () => {
   });
  const {data: option, } = useGetOptionIdQuery(id);
  const options = option?.data?.optionID
-
+  //  console.log("Options:", options);
+ 
   const [selectedId, setSelectedId] = useState(null);
   const [sendVote, { data: voteData, error: voteError, isLoading: voteLoading }] = useSendVoteMutation();
   const handleSubmit = e => {
     e.preventDefault();
-    sendVote({pollID: String(id), optionID: String(options)}).unwrap()
+    sendVote({pollID: String(id), optionID: String(selectedId)}).unwrap()
       .then((res) => {
         if (res?.data) {
           dispatch(setSaveVote(res.data));
