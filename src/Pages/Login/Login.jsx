@@ -46,7 +46,7 @@ const Login = () => {
                 localStorage.setItem('authToken', data.token);
                 toast.success('Login successful!', {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                 });
                 setTimeout(() => {
                     navigate('/');  
@@ -62,7 +62,7 @@ const Login = () => {
             const message = error?.data?.message || 'Login failed!';
             toast.error(message, {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 3000,
             });
         }
 

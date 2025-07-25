@@ -150,9 +150,9 @@ const VoteResult = () => {
                   <div className="p-6 md:p-8">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-start space-x-4">
-                        <div className="flex-shrink-0">
+                        {/* <div className="flex-shrink-0">
                           {getRankIcon(index)}
-                        </div>
+                        </div> */}
                         <div className="flex-1 min-w-0">
                           <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2 group-hover:text-gray-900 transition-colors">
                             {result.title}
