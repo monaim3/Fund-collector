@@ -101,7 +101,7 @@ const Header = () => {
               className={`px-4 py-3 border-b hover:bg-gray-100 transition duration-200 ${notif.isRead === "N" ? "bg-blue-50" : ""
                 } cursor-pointer`}
               onClick={async () => {
-                console.log("Notification clicked:", notif.isRead);
+              
                 if (notif.isRead === "N") {
                   try {
                     await notificationRead({ id: notif.id });

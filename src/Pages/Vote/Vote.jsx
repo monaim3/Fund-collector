@@ -113,7 +113,7 @@ const Vote = () => {
                       <span>{new Date(vote.expiresAt).toLocaleDateString()}</span>
                     </div>
                   </div>
-                   {console.log("vote.isExpired :", vote.isExpired )}
+                 
                   {/* CTA */}
                 { vote.isExpired === "TRUE" ? (
                     <Link to={`/vote/${vote.id}/result`}>

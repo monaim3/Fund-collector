@@ -22,7 +22,6 @@ const VoteDetails = () => {
   const [sendVote, { data: voteData, error: voteError, isLoading: voteLoading }] = useSendVoteMutation();
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("pollID:", id, "optionID:", options);
     sendVote({pollID: String(id), optionID: String(options)}).unwrap()
       .then((res) => {
         if (res?.data) {
