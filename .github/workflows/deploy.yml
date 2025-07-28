@@ -3,7 +3,7 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main # Change this if you're using a different default branch
+      - main
 
 jobs:
   deploy:
@@ -28,4 +28,4 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        run: vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --name=FUND-COLLECTOR
+        run: vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --yes
