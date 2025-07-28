@@ -10,25 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: 🧰 Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm install
 
-      # No test step here
+      # 🛑 Optional: Remove or add back test step if needed
+      # - name: ✅ Run tests
+      #   run: npm test
 
-      - name: Build React app
+      - name: 🛠️ Build the React app
         run: npm run build
 
-      - name: Deploy to Vercel
+      - name: 🚀 Deploy to Vercel
         run: |
           npm install -g vercel
-          vercel --token=$VERCEL_TOKEN --prod --confirm
+          vercel --token=$VERCEL_TOKEN --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
