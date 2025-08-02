@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BarChart3, TrendingUp, Users, Trophy, Medal, Award } from 'lucide-react';
-import {  useGetVoteResultQuery } from '../../store/services/api';
+import { useGetVoteResultQuery } from '../../store/services/api';
 import Loading from '../../components/ui/Loading';
 
 const VoteResult = () => {
@@ -11,10 +11,14 @@ const VoteResult = () => {
   const { id } = useParams();
   const token = localStorage.getItem("authToken");
 
-   const { data, isLoading } = useGetVoteResultQuery(id, token, { skip: !token });
-  const voteResults = data?.data || []; 
+  const { data, isLoading } = useGetVoteResultQuery(id, token, { skip: !token });
+  const voteResults = data?.data || [];
   const [animatedResults, setAnimatedResults] = useState([]);
   const totalVotes = voteResults?.reduce((sum, result) => sum + result.vote_count, 0) || 0;
+  const topOption = voteResults.length > 0 ? voteResults.reduce((max, current) =>
+    current.vote_count > max.vote_count ? current : max
+  )
+    : null;
 
   useEffect(() => {
     if (voteResults.length > 0) {
@@ -108,7 +112,11 @@ const VoteResult = () => {
                   <div>
                     <p className="text-sm font-medium text-gray-600">Leading Option</p>
                     <p className="text-xl font-bold text-gray-800 truncate">
-                      {voteResults[0]?.title?.split(':')[1]?.trim() || voteResults[0]?.title}
+                      {topOption ? (
+                        <p className="text-xl font-bold text-gray-800 truncate"> {topOption.title}</p>
+                      ) : (
+                        <p>No votes yet.</p>
+                      )}
                     </p>
                   </div>
                   <Trophy className="w-8 h-8 text-yellow-500" />
@@ -122,8 +130,8 @@ const VoteResult = () => {
                     <p className="text-xl font-bold text-gray-800">
                       {totalVotes > 0
                         ? Math.round((totalVotes / (totalVotes * 1.2)) * 100)
-                        : 0}% 
-                        </p>
+                        : 0}%
+                    </p>
                   </div>
                   <TrendingUp className="w-8 h-8 text-green-500" />
                 </div>
@@ -158,7 +166,7 @@ const VoteResult = () => {
                             {result.title}
                           </h3>
                           <div className="flex items-center space-x-4 text-sm text-gray-600">
-                           
+
                             <span>{animatedResults[index]?.votes?.toLocaleString() || 0} votes</span>
                           </div>
                         </div>

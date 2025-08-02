@@ -82,17 +82,15 @@ const Cards = () => {
       <div className="container  mx-auto  px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-         <h1 className='text-3xl text-center'>This is Test Deploy</h1>
           <h1 className="text-3xl text-center md:text-4xl font-semibold text-gray-800 mb-2">
             <span
               className="
-    text-4xl font-bold
-    text-transparent bg-clip-text
-    bg-gradient-to-r from-[#2596be] via-[#4079ff] to-[#40ffaa]
-    bg-[length:200%_200%] bg-[position:0%_50%]
-    animate-gradient-x
-  "
-            >
+              text-4xl font-bold
+              text-transparent bg-clip-text
+              bg-gradient-to-r from-[#2596be] via-[#4079ff] to-[#40ffaa]
+              bg-[length:200%_200%] bg-[position:0%_50%]
+              animate-gradient-x
+            " >
               Welcome  {user?.displayName}
             </span>
             {/* <span className='font-light'>Welcome </span>

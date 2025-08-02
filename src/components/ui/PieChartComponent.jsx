@@ -16,11 +16,11 @@ const PieChartComponent = ({ expense, balance }) => {
   ];
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-lg mt-12">
+    <div className="bg-white rounded-xl p-2 lg:p-6 shadow-lg mt-12">
       <h4 className="text-lg font-semibold text-gray-800 mb-4 text-center">Fund Distribution</h4>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
-          {/* ✅ Use regular SVG <defs>, not imported Defs */}
+          {/*  Use regular SVG <defs>, not imported Defs */}
           <defs>
             <linearGradient id="balanceGradient" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#2596be" />

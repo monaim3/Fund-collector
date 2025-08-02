@@ -101,7 +101,7 @@ const Header = () => {
               className={`px-4 py-3 border-b hover:bg-gray-100 transition duration-200 ${notif.isRead === "N" ? "bg-blue-50" : ""
                 } cursor-pointer`}
               onClick={async () => {
-              
+
                 if (notif.isRead === "N") {
                   try {
                     await notificationRead({ id: notif.id });
@@ -132,7 +132,7 @@ const Header = () => {
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center space-x-2">
               <img src={logo} alt="Logo" className="w-20 h-20" />
-              <span className="text-xl lg:text-3xl font-semibold text-white">
+              <span className="text-xl lg:text-3xl font-semibold text-white hidden md:block">
                 E-112 BATCH-FUND
               </span>
             </Link>
@@ -210,8 +210,9 @@ const Header = () => {
               )}
             </div>
           </nav>
-             {/* 🔔 Mobile Notifications */}
-            <div className="px-4 py-2 relative block md:hidden lg:hidden" ref={dropdownRef}>
+          <div className="flex items-center space-x-4">
+            {/* 🔔 Mobile Notifications */}
+            <div className="px-0 py-2 relative block md:hidden lg:hidden" ref={dropdownRef}>
               <div
                 onClick={() => setShowNotification((prev) => !prev)}
                 className="w-8 h-8 rounded-full flex items-center justify-center text-white cursor-pointer"
@@ -225,13 +226,14 @@ const Header = () => {
               </div>
               {showNotification && renderNotificationDropdown()}
             </div>
-          {/* Mobile Menu Toggle Button */}
-          <button
-            onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-all duration-300"
-          >
-            {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
-          </button>
+            {/* Mobile Menu Toggle Button */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 rounded-lg bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-all duration-300"
+            >
+              {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -259,7 +261,7 @@ const Header = () => {
               </Link>
             </div>
 
-         
+
 
             {/* Mobile Avatar */}
             <div className="px-4 py-4 relative z-50">
